@@ -122,18 +122,18 @@ const AIStudyPlan = () => {
     };
 
     return (
-        <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 backdrop-blur-sm">
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm shadow-sm transition-colors">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4 sm:gap-0">
                 <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-400">
+                    <div className="p-2 rounded-lg bg-indigo-100 text-indigo-600 dark:bg-indigo-500/10 dark:text-indigo-400">
                         <Brain className={`h-5 w-5 ${isGenerating ? 'animate-pulse' : ''}`} />
                     </div>
                     <div>
-                        <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-white flex items-center gap-2">
                             AI Study Plan
-                            {isGenerating && <span className="text-[10px] bg-indigo-500/20 text-indigo-400 px-2 py-0.5 rounded-full animate-pulse">Thinking...</span>}
+                            {isGenerating && <span className="text-[10px] bg-indigo-200 text-indigo-700 dark:bg-indigo-500/20 dark:text-indigo-400 px-2 py-0.5 rounded-full animate-pulse">Thinking...</span>}
                         </h3>
-                        <p className="text-xs text-indigo-400 flex items-center gap-1">
+                        <p className="text-xs text-indigo-600 dark:text-indigo-400 flex items-center gap-1">
                             <Sparkles className="h-3 w-3" /> Personalized for you
                         </p>
                     </div>
@@ -141,14 +141,14 @@ const AIStudyPlan = () => {
                 <div className="flex gap-2 w-full sm:w-auto">
                     <button
                         onClick={handleExportCalendar}
-                        className="flex-1 sm:flex-none justify-center text-xs flex items-center gap-1 text-indigo-400 hover:text-indigo-300 transition-colors border border-indigo-500/30 px-3 py-2 sm:px-2 sm:py-1 rounded-md"
+                        className="flex-1 sm:flex-none justify-center text-xs flex items-center gap-1 text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors border border-indigo-200 dark:border-indigo-500/30 px-3 py-2 sm:px-2 sm:py-1 rounded-md"
                     >
                         <Calendar className="w-3 h-3" /> Add to Calendar
                     </button>
                     <button
                         onClick={() => generateNewPlan(tasks)}
                         disabled={isGenerating}
-                        className="flex-1 sm:flex-none justify-center text-xs text-gray-400 hover:text-white transition-colors border border-gray-700 sm:border-transparent px-3 py-2 sm:px-0 sm:py-0 rounded-md disabled:opacity-50"
+                        className="flex-1 sm:flex-none justify-center text-xs text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors border border-gray-300 dark:border-gray-700 sm:border-transparent px-3 py-2 sm:px-0 sm:py-0 rounded-md disabled:opacity-50"
                     >
                         Generate New
                     </button>
@@ -170,14 +170,14 @@ const AIStudyPlan = () => {
                     <div
                         key={task.id}
                         className={`group flex items-center justify-between p-3 rounded-lg border transition-all ${task.completed
-                            ? "bg-gray-800/30 border-gray-800 opacity-60"
-                            : "bg-gray-800/50 border-gray-700 hover:border-indigo-500/30 hover:bg-gray-800"
+                            ? "bg-gray-50/50 border-gray-200 opacity-60 dark:bg-gray-800/30 dark:border-gray-800"
+                            : "bg-gray-50 border-gray-200 hover:border-indigo-300 hover:bg-white dark:bg-gray-800/50 dark:border-gray-700 dark:hover:border-indigo-500/30 dark:hover:bg-gray-800"
                             }`}
                     >
                         <div className="flex items-center gap-3">
                             <button
                                 onClick={() => toggleTask(task.id)}
-                                className={`flex-shrink-0 transition-colors ${task.completed ? "text-green-500" : "text-gray-500 group-hover:text-indigo-400"
+                                className={`flex-shrink-0 transition-colors ${task.completed ? "text-green-500" : "text-gray-400 dark:text-gray-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400"
                                     }`}
                             >
                                 {task.completed ? (
@@ -187,17 +187,17 @@ const AIStudyPlan = () => {
                                 )}
                             </button>
                             <div>
-                                <h4 className={`text-sm font-medium ${task.completed ? "text-gray-500 line-through" : "text-gray-200"}`}>
+                                <h4 className={`text-sm font-medium ${task.completed ? "text-gray-400 dark:text-gray-500 line-through" : "text-gray-700 dark:text-gray-200"}`}>
                                     {task.topic}
                                 </h4>
                                 <div className="flex items-center gap-2 mt-1">
-                                    <span className={`text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded ${task.type === 'review' ? 'bg-yellow-500/10 text-yellow-400' :
-                                        task.type === 'practice' ? 'bg-green-500/10 text-green-400' :
-                                            'bg-blue-500/10 text-blue-400'
+                                    <span className={`text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded ${task.type === 'review' ? 'bg-yellow-500/10 text-yellow-600 dark:text-yellow-400' :
+                                        task.type === 'practice' ? 'bg-green-500/10 text-green-600 dark:text-green-400' :
+                                            'bg-blue-500/10 text-blue-600 dark:text-blue-400'
                                         }`}>
                                         {task.subject}
                                     </span>
-                                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                                    <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
                                         <Clock className="h-3 w-3" /> {task.duration}
                                     </span>
                                 </div>
@@ -205,7 +205,7 @@ const AIStudyPlan = () => {
                         </div>
 
                         {!task.completed && (
-                            <button className="opacity-0 group-hover:opacity-100 p-1.5 rounded-md bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 transition-all">
+                            <button className="opacity-0 group-hover:opacity-100 p-1.5 rounded-md bg-indigo-50 text-indigo-600 hover:bg-indigo-100 dark:bg-indigo-500/10 dark:text-indigo-400 dark:hover:bg-indigo-500/20 transition-all">
                                 <ArrowRight className="h-4 w-4" />
                             </button>
                         )}
@@ -213,11 +213,11 @@ const AIStudyPlan = () => {
                 ))}
             </div>
 
-            <div className="mt-4 pt-4 border-t border-gray-800 flex justify-between items-center">
-                <div className="text-xs text-gray-500">
-                    <span className="text-indigo-400 font-medium">{tasks.filter(t => !t.completed).length}</span> upcoming sessions
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center">
+                <div className="text-xs text-gray-500 dark:text-gray-400">
+                    <span className="text-indigo-600 dark:text-indigo-400 font-medium">{tasks.filter(t => !t.completed).length}</span> upcoming sessions
                 </div>
-                <button className="text-xs font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
+                <button className="text-xs font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors">
                     View Full Plan →
                 </button>
             </div>

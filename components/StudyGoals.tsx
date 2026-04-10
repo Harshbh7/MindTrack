@@ -72,35 +72,35 @@ export default function StudyGoals() {
         await remove(goalRef);
     };
 
-    if (loading) return <div className="h-48 animate-pulse bg-gray-900 rounded-xl"></div>;
+    if (loading) return <div className="h-48 animate-pulse bg-gray-100 dark:bg-gray-900 rounded-xl"></div>;
 
     return (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 h-fit max-h-[500px] flex flex-col">
-            <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm rounded-xl p-6 h-fit max-h-[500px] flex flex-col transition-colors">
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                 <Target className="w-5 h-5 text-red-500" />
                 Daily Goals
             </h3>
 
-            <div className="overflow-y-auto space-y-3 mb-4 pr-1 scrollbar-thin scrollbar-thumb-gray-700">
+            <div className="overflow-y-auto space-y-3 mb-4 pr-1 scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-700">
                 {goals.length === 0 ? (
                     <p className="text-gray-500 text-sm text-center py-6">No goals set for today. Aim high!</p>
                 ) : (
                     goals.map((goal) => (
-                        <div key={goal.id} className="group flex items-center justify-between bg-gray-800/50 p-3 rounded-lg hover:bg-gray-800 transition-colors">
+                        <div key={goal.id} className="group flex items-center justify-between bg-gray-50 dark:bg-gray-800/50 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                             <div className="flex items-center gap-3 overflow-hidden">
                                 <button
                                     onClick={() => toggleGoal(goal.id, goal.completed)}
-                                    className={`transition-colors ${goal.completed ? "text-green-500" : "text-gray-500 hover:text-white"}`}
+                                    className={`transition-colors ${goal.completed ? "text-green-500" : "text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-white"}`}
                                 >
                                     {goal.completed ? <CheckCircle className="w-5 h-5" /> : <Circle className="w-5 h-5" />}
                                 </button>
-                                <span className={`text-sm ${goal.completed ? "text-gray-500 line-through" : "text-gray-200"} truncate`}>
+                                <span className={`text-sm ${goal.completed ? "text-gray-400 dark:text-gray-500 line-through" : "text-gray-700 dark:text-gray-200"} truncate`}>
                                     {goal.text}
                                 </span>
                             </div>
                             <button
                                 onClick={() => deleteGoal(goal.id)}
-                                className="text-gray-600 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
+                                className="text-gray-400 hover:text-red-500 dark:text-gray-600 dark:hover:text-red-500 opacity-0 group-hover:opacity-100 transition-all"
                             >
                                 <Trash2 className="w-4 h-4" />
                             </button>
@@ -115,7 +115,7 @@ export default function StudyGoals() {
                     value={newGoal}
                     onChange={(e) => setNewGoal(e.target.value)}
                     placeholder="Add a new goal..."
-                    className="w-full bg-gray-800 text-sm text-white rounded-lg pl-4 pr-10 py-3 focus:outline-none focus:ring-1 focus:ring-red-500"
+                    className="w-full bg-gray-100 dark:bg-gray-800 text-sm text-gray-900 dark:text-white rounded-lg pl-4 pr-10 py-3 focus:outline-none focus:ring-1 focus:ring-red-500"
                 />
                 <button
                     type="submit"

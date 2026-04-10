@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Editor from "@monaco-editor/react";
-import { Play, Code as CodeIcon, RotateCw, Bot, Monitor } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import Editor, { loader, useMonaco } from "@monaco-editor/react";
+import { Play, Code as CodeIcon, RotateCw, Bot, Monitor, Maximize2, Terminal, Save, Zap, ZapOff, Layout, ChevronRight, MessageSquare, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MindSwal, Toast } from "@/lib/swal";
 
 const BOILERPLATES: Record<string, string> = {
     web_html: "<!DOCTYPE html>\n<html>\n<head>\n  <title>MindTrack Web</title>\n</head>\n<body>\n  <h1>Hello from MindTrack!</h1>\n  <button id=\"btn\">Click Me</button>\n</body>\n</html>",
@@ -16,11 +18,15 @@ const BOILERPLATES: Record<string, string> = {
 type WebTab = "html" | "css" | "javascript";
 
 export default function CodeEditor() {
+    const monaco = useMonaco();
     const [language, setLanguage] = useState("web");
     const [webTab, setWebTab] = useState<WebTab>("html");
+    const [autoRun, setAutoRun] = useState(true);
+    const [showAiSidebar, setShowAiSidebar] = useState(false);
+    const [theme, setTheme] = useState("vs-dark");
 
     // State for standard languages
-    const [code, setCode] = useState(BOILERPLATES.python);
+    const [code, setCode] = useState("");
 
     // State for Web project (HTML/CSS/JS combined)
     const [webFiles, setWebFiles] = useState({
@@ -37,21 +43,70 @@ export default function CodeEditor() {
     const [isReviewing, setIsReviewing] = useState(false);
     const [aiSuggestion, setAiSuggestion] = useState("");
 
+    // Load custom theme
     useEffect(() => {
-        if (language !== "web") {
-            setCode(BOILERPLATES[language] || "");
+        if (monaco) {
+            monaco.editor.defineTheme('mindtrack-vision', {
+                base: 'vs-dark',
+                inherit: true,
+                rules: [
+                    { token: 'comment', foreground: '6272a4', fontStyle: 'italic' },
+                    { token: 'keyword', foreground: 'bd93f9' },
+                    { token: 'string', foreground: 'f1fa8c' },
+                    { token: 'number', foreground: '8be9fd' },
+                    { token: 'operator', foreground: 'ff79c6' },
+                ],
+                colors: {
+                    'editor.background': '#0f111a',
+                    'editor.foreground': '#e6edf3',
+                    'editor.lineHighlightBackground': '#1b1e2e',
+                    'editorCursor.foreground': '#bd93f9',
+                    'editorLineNumber.foreground': '#4b5563',
+                    'editor.selectionBackground': '#3e4451',
+                    'editorIndentGuide.background': '#1f2937',
+                    'editorIndentGuide.activeBackground': '#374151',
+                }
+            });
+            setTheme('mindtrack-vision');
+        }
+    }, [monaco]);
+
+    // Code Persistence & Boilerplate Loading
+    useEffect(() => {
+        const savedWeb = localStorage.getItem('bt_arena_web');
+        const savedCode = localStorage.getItem(`bt_arena_${language}`);
+
+        if (language === "web") {
+            if (savedWeb) setWebFiles(JSON.parse(savedWeb));
+            else setWebFiles({ html: BOILERPLATES.web_html, css: BOILERPLATES.web_css, javascript: BOILERPLATES.web_js });
+        } else {
+            if (savedCode) setCode(savedCode);
+            else setCode(BOILERPLATES[language] || "");
         }
         setOutput("");
-        setHtmlPreview("");
     }, [language]);
+
+    // Auto-Run effect
+    useEffect(() => {
+        if (autoRun && language === "web") {
+            const timer = setTimeout(() => {
+                handleRunCode();
+            }, 800);
+            return () => clearTimeout(timer);
+        }
+    }, [webFiles, autoRun, language]);
 
     const activeCode = language === "web" ? webFiles[webTab] : code;
 
     const handleEditorChange = (value: string | undefined) => {
+        const newVal = value || "";
         if (language === "web") {
-            setWebFiles(prev => ({ ...prev, [webTab]: value || "" }));
+            const updated = { ...webFiles, [webTab]: newVal };
+            setWebFiles(updated);
+            localStorage.setItem('bt_arena_web', JSON.stringify(updated));
         } else {
-            setCode(value || "");
+            setCode(newVal);
+            localStorage.setItem(`bt_arena_${language}`, newVal);
         }
     };
 
@@ -109,6 +164,7 @@ export default function CodeEditor() {
 
     const handleAiReview = async () => {
         setIsReviewing(true);
+        setShowAiSidebar(true);
         setAiSuggestion("");
 
         try {
@@ -146,135 +202,224 @@ export default function CodeEditor() {
     };
 
     return (
-        <div className="flex h-full w-full flex-col gap-4">
-            {/* Editor Controls */}
-            <div className="flex flex-col gap-4 rounded-xl border border-gray-800 bg-gray-900 p-4 sm:flex-row sm:items-center sm:justify-between shrink-0">
+        <div className="flex h-full w-full flex-col gap-4 overflow-hidden">
+            {/* Cyber IDE Header */}
+            <div className="flex flex-col gap-4 rounded-2xl border border-white/10 bg-gray-900/60 backdrop-blur-xl p-4 sm:flex-row sm:items-center sm:justify-between shrink-0 shadow-2xl">
                 <div className="flex flex-wrap items-center gap-4">
-                    <CodeIcon className="h-6 w-6 text-blue-400" />
-                    <select
-                        value={language}
-                        onChange={(e) => setLanguage(e.target.value)}
-                        className="rounded-lg border border-gray-700 bg-gray-800 p-2 text-white focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    >
-                        <option value="web">Web (HTML/CSS/JS)</option>
-                        <option value="python">Python</option>
-                        <option value="cpp">C++</option>
-                        <option value="java">Java</option>
-                    </select>
+                    <div className="p-2 bg-blue-500/10 rounded-xl border border-blue-500/20">
+                        <CodeIcon className="h-5 w-5 text-blue-400" />
+                    </div>
+                    <div className="flex flex-col">
+                        <select
+                            value={language}
+                            onChange={(e) => setLanguage(e.target.value)}
+                            className="bg-transparent text-white font-bold text-sm focus:outline-none cursor-pointer hover:text-blue-400 transition-colors"
+                        >
+                            <option value="web" className="bg-gray-900">Web Projects</option>
+                            <option value="python" className="bg-gray-900">Python 3.10</option>
+                            <option value="cpp" className="bg-gray-900">C++ GCC 13</option>
+                            <option value="java" className="bg-gray-900">Java JDK 21</option>
+                        </select>
+                        <span className="text-[10px] text-gray-500 uppercase font-black tracking-widest leading-none mt-1">Environment Ready</span>
+                    </div>
 
                     {language === "web" && (
-                        <div className="flex bg-gray-800 rounded-lg p-1 ml-2">
+                        <div className="flex items-center gap-1 bg-black/40 rounded-xl p-1 ml-2 border border-white/5">
                             {(["html", "css", "javascript"] as WebTab[]).map(tab => (
                                 <button
                                     key={tab}
                                     onClick={() => setWebTab(tab)}
-                                    className={`px-3 py-1 text-sm font-medium rounded-md transition-colors ${webTab === tab ? "bg-blue-600 text-white" : "text-gray-400 hover:text-white"
+                                    className={`px-3 py-1.5 text-xs font-black rounded-lg transition-all uppercase tracking-tighter ${webTab === tab 
+                                        ? "bg-blue-600 shadow-lg shadow-blue-500/20 text-white" 
+                                        : "text-gray-500 hover:text-white"
                                         }`}
                                 >
-                                    {tab === "javascript" ? "JS" : tab.toUpperCase()}
+                                    {tab === "javascript" ? "JS" : tab}
                                 </button>
                             ))}
                         </div>
                     )}
                 </div>
-                <div className="flex flex-wrap items-center gap-2">
+
+                <div className="flex flex-wrap items-center gap-3">
+                    {language === "web" && (
+                         <button
+                            onClick={() => setAutoRun(!autoRun)}
+                            className={`flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-bold transition-all ${
+                                autoRun ? 'bg-amber-500/10 border-amber-500/50 text-amber-500' : 'bg-gray-800 border-gray-700 text-gray-500'
+                            }`}
+                        >
+                            {autoRun ? <Zap className="w-4 h-4" /> : <ZapOff className="w-4 h-4" />}
+                            <span>{autoRun ? "Auto-Sync" : "Manual"}</span>
+                        </button>
+                    )}
+
+                    <div className="h-8 w-px bg-white/10 mx-1 hidden sm:block" />
+
                     <button
                         onClick={handleAiReview}
                         disabled={isReviewing}
-                        className="flex items-center space-x-2 rounded-lg bg-pink-600/20 px-4 py-2 text-sm font-semibold text-pink-400 hover:bg-pink-600/30 transition-colors disabled:opacity-50"
+                        className="group flex items-center space-x-2 rounded-xl bg-purple-600/20 px-4 py-2 text-xs font-black text-purple-400 border border-purple-500/30 hover:bg-purple-600/30 transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
                     >
-                        {isReviewing ? (
-                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-pink-400 border-t-transparent"></div>
-                        ) : (
-                            <Bot className="h-4 w-4" />
-                        )}
-                        <span>{isReviewing ? "Analyzing..." : "AI Review"}</span>
+                        <Bot className={`h-4 w-4 ${isReviewing ? 'animate-bounce' : 'group-hover:rotate-12 transition-transform'}`} />
+                        <span>AI REVIEW</span>
                     </button>
 
                     <button
-                        onClick={resetCode}
-                        className="rounded-lg p-2 text-gray-400 hover:bg-gray-800 hover:text-white"
-                        title="Reset Code"
-                    >
-                        <RotateCw className="h-5 w-5" />
-                    </button>
-                    <button
                         onClick={handleRunCode}
                         disabled={isRunning}
-                        className="flex items-center space-x-2 rounded-lg bg-green-600 px-4 py-2 font-semibold text-white hover:bg-green-500 transition-colors disabled:opacity-50"
+                        className="flex items-center space-x-2 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-5 py-2 text-xs font-black text-white hover:from-emerald-500 hover:to-teal-500 shadow-lg shadow-emerald-500/20 transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
                     >
                         <Play className="h-4 w-4" />
-                        <span>{isRunning ? "Running..." : "Run Code"}</span>
+                        <span>{isRunning ? "RUNNING" : "EXECUTE"}</span>
+                    </button>
+                    
+                    <button
+                        onClick={resetCode}
+                        className="rounded-xl p-2 bg-gray-800 border border-gray-700 text-gray-400 hover:text-white transition-colors"
+                        title="Reset Code"
+                    >
+                        <RotateCw className="h-4 w-4" />
                     </button>
                 </div>
             </div>
 
-            <div className="grid flex-1 min-h-0 gap-4 lg:grid-cols-2">
+            <div className="flex-1 min-h-0 flex gap-4 relative">
                 {/* Editor Area */}
-                <div className="flex flex-col overflow-hidden rounded-xl border border-gray-800 bg-[#1e1e1e] relative min-h-[40vh] lg:min-h-0">
-                    <Editor
-                        height="100%"
-                        language={language === "web" ? webTab : language}
-                        value={activeCode}
-                        theme="vs-dark"
-                        onChange={handleEditorChange}
-                        options={{
-                            minimap: { enabled: false },
-                            fontSize: 14,
-                            scrollBeyondLastLine: false,
-                            automaticLayout: true,
-                        }}
-                    />
-
-                    {/* AI Feedback Overlay */}
-                    {aiSuggestion && (
-                        <div className="absolute bottom-4 right-4 max-w-md bg-gray-900/95 backdrop-blur-sm border border-pink-500/50 rounded-xl p-4 shadow-2xl animate-in slide-in-from-bottom-2 z-20">
-                            <div className="flex items-start justify-between mb-2">
-                                <div className="flex items-center gap-2 text-pink-400 font-bold">
-                                    <Bot className="h-4 w-4" />
-                                    <span>AI Feedback</span>
-                                </div>
-                                <button onClick={() => setAiSuggestion("")} className="text-gray-500 hover:text-white">✕</button>
-                            </div>
-                            <div className="text-sm text-gray-200 leading-relaxed max-h-60 overflow-y-auto pr-2">
-                                {aiSuggestion.split('\n').map((line, i) => (
-                                    <p key={i} className={line.trim() === '' ? 'h-2' : 'mb-1'}>
-                                        {line}
-                                    </p>
-                                ))}
-                            </div>
+                <div className="flex-1 flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0f111a] shadow-2xl relative">
+                    <div className="bg-black/40 px-4 py-2 border-b border-white/5 flex justify-between items-center shrink-0">
+                        <div className="flex items-center gap-2">
+                           <div className="flex gap-1.5">
+                                <div className="w-2.5 h-2.5 rounded-full bg-red-500/50" />
+                                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/50" />
+                                <div className="w-2.5 h-2.5 rounded-full bg-green-500/50" />
+                           </div>
+                           <span className="ml-4 text-[10px] font-black text-gray-500 uppercase tracking-widest tracking-widest">{language === 'web' ? webTab : language}.file</span>
                         </div>
-                    )}
+                        <Save className="w-3 h-3 text-gray-700" />
+                    </div>
+                    <div className="flex-1">
+                        <Editor
+                            height="100%"
+                            language={language === "web" ? webTab : language}
+                            value={activeCode}
+                            theme={theme}
+                            onChange={handleEditorChange}
+                            options={{
+                                minimap: { enabled: false },
+                                fontSize: 13,
+                                fontFamily: "'JetBrains Mono', monospace",
+                                scrollBeyondLastLine: false,
+                                automaticLayout: true,
+                                padding: { top: 16, bottom: 16 },
+                                renderLineHighlight: 'all',
+                                roundedSelection: true,
+                                scrollbar: {
+                                    vertical: 'hidden',
+                                    horizontal: 'hidden'
+                                }
+                            }}
+                        />
+                    </div>
                 </div>
 
+                {/* AI Sidebar - Animated */}
+                <AnimatePresence>
+                    {showAiSidebar && (
+                        <motion.div 
+                            initial={{ x: 400, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            exit={{ x: 400, opacity: 0 }}
+                            className="absolute lg:relative right-0 top-0 h-full w-[350px] bg-gray-900/80 backdrop-blur-2xl border-l border-white/10 z-50 flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.5)]"
+                        >
+                            <div className="p-4 border-b border-white/10 flex justify-between items-center bg-purple-600/10">
+                                <div className="flex items-center gap-2 text-purple-400">
+                                    <Sparkles className="w-5 h-5" />
+                                    <span className="font-black text-xs uppercase tracking-widest">AI Debugger</span>
+                                </div>
+                                <button onClick={() => setShowAiSidebar(false)} className="text-gray-500 hover:text-white">
+                                    <X className="w-5 h-5" />
+                                </button>
+                            </div>
+                            <div className="flex-1 overflow-y-auto p-5 custom-scrollbar">
+                                {isReviewing ? (
+                                    <div className="flex flex-col items-center justify-center h-full space-y-4 opacity-50">
+                                        <div className="h-10 w-10 animate-spin rounded-full border-4 border-purple-500 border-t-transparent" />
+                                        <p className="text-[10px] font-black uppercase tracking-tighter text-purple-400">Analyzing Architecture...</p>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-4">
+                                        <div className="bg-purple-500/5 rounded-xl border border-purple-500/20 p-4">
+                                            <div className="flex items-center gap-2 mb-3">
+                                                <MessageSquare className="w-3 h-3 text-purple-400" />
+                                                <span className="text-[10px] font-bold text-gray-400 uppercase">Analysis Results</span>
+                                            </div>
+                                            <div className="text-sm text-gray-200 leading-relaxed font-medium">
+                                                {aiSuggestion || "Select 'AI Review' to analyze your code for patterns and bugs."}
+                                            </div>
+                                        </div>
+                                        
+                                        {aiSuggestion && (
+                                            <div className="p-4 rounded-xl border border-white/5 bg-white/5">
+                                                <span className="text-[9px] font-black text-gray-500 uppercase tracking-widest">Advanced Features Coming Soon</span>
+                                                <p className="text-[11px] text-gray-400 mt-1 italic">Optimization scripts and auto-fixes will be available in the next core update.</p>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+
                 {/* Output Area */}
-                <div className="flex flex-col rounded-xl border border-gray-800 bg-gray-900 overflow-hidden min-h-[40vh] lg:min-h-0">
-                    <div className="border-b border-gray-800 p-3 bg-gray-900 flex justify-between items-center shrink-0">
-                        <h3 className="text-sm font-semibold text-gray-400 flex items-center gap-2">
-                            {language === "web" ? <Monitor className="w-4 h-4" /> : <CodeIcon className="w-4 h-4" />}
-                            {language === "web" ? "Live Preview" : "Console Output"}
-                        </h3>
+                <div className="hidden lg:flex flex-col w-[40%] rounded-2xl border border-white/10 bg-gray-950 overflow-hidden shadow-2xl">
+                    <div className="border-b border-white/5 p-4 bg-black/40 flex justify-between items-center shrink-0">
+                        <div className="flex items-center gap-3">
+                            <div className={`p-1.5 rounded-lg ${language === 'web' ? 'bg-amber-500/10' : 'bg-blue-500/10'}`}>
+                                {language === "web" ? <Monitor className="w-3.5 h-3.5 text-amber-500" /> : <Terminal className="w-3.5 h-3.5 text-blue-500" />}
+                            </div>
+                            <h3 className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                                {language === "web" ? "Liquid Preview" : "Kernel Console"}
+                            </h3>
+                        </div>
+                        {language === 'web' && <Maximize2 className="w-3 h-3 text-gray-600 hover:text-white cursor-pointer" />}
                     </div>
 
-                    {language === "web" ? (
-                        <div className="flex-1 bg-white relative">
-                            {htmlPreview ? (
-                                <iframe
-                                    srcDoc={htmlPreview}
-                                    className="absolute inset-0 w-full h-full border-none bg-white"
-                                    title="HTML Preview"
-                                />
-                            ) : (
-                                <div className="p-4 flex items-center justify-center h-full text-gray-500 text-sm">
-                                    Click "Run Code" to compile and view your Web preview...
-                                </div>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="flex-1 overflow-auto p-4 font-mono text-sm text-gray-300 whitespace-pre-wrap bg-gray-950">
-                            {output || <span className="text-gray-600">Run code to see output...</span>}
-                        </div>
-                    )}
+                    <div className="flex-1 relative">
+                        {language === "web" ? (
+                            <div className="h-full w-full bg-white relative">
+                                {htmlPreview ? (
+                                    <iframe
+                                        srcDoc={htmlPreview}
+                                        className="h-full w-full border-none bg-white"
+                                        title="HTML Preview"
+                                    />
+                                ) : (
+                                    <div className="p-10 flex flex-col items-center justify-center h-full text-center space-y-4">
+                                        <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+                                            <Monitor className="w-8 h-8 text-gray-300" />
+                                        </div>
+                                        <p className="text-gray-400 text-sm font-medium">Render queue empty.<br/><span className="text-xs text-gray-500">Enable Auto-Sync or press Execute.</span></p>
+                                    </div>
+                                )}
+                            </div>
+                        ) : (
+                            <div className="h-full w-full overflow-auto p-6 font-mono text-sm leading-relaxed custom-scrollbar">
+                                {output ? (
+                                    <div className="space-y-2">
+                                        <span className="text-emerald-500/50 uppercase text-[9px] font-black tracking-widest">Process Output:</span>
+                                        <div className="text-emerald-400/90 [text-shadow:_0_0_10px_rgba(52,211,153,0.3)]">{output}</div>
+                                    </div>
+                                ) : (
+                                    <div className="h-full flex flex-col items-center justify-center opacity-20 filter grayscale">
+                                        <Terminal className="w-12 h-12 mb-4" />
+                                        <span className="text-xs uppercase tracking-widest font-black italic">Waiting for syscall...</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </div>

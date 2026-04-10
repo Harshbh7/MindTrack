@@ -2,9 +2,12 @@
 
 import { useRef, useEffect, useState, useMemo } from "react";
 import { useFaceDetection } from "@/hooks/useFaceDetection";
+import { useAuth } from "@/context/AuthContext";
 import { useTimer } from "@/context/TimerContext";
 import { useGamification } from "@/context/GamificationContext";
 import { Play, Pause, RefreshCw, Smartphone, AlertTriangle, StopCircle } from "lucide-react";
+import { realtimeDb } from "@/lib/firebase";
+import { ref, set } from "firebase/database";
 import SessionReport from "./SessionReport";
 
 interface MoodEntry {
@@ -13,15 +16,19 @@ interface MoodEntry {
 }
 
 export default function FocusTimer() {
+    const { user } = useAuth();
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const [cameraError, setCameraError] = useState<string | null>(null);
     const [isStreaming, setIsStreaming] = useState(false);
-    const [strictMode, setStrictMode] = useState(false);
+    const [strictMode, setStrictMode] = useState(true);
+    const [wasAutoPaused, setWasAutoPaused] = useState(false);
 
     // AI Analysis State
     const [moodHistory, setMoodHistory] = useState<MoodEntry[]>([]);
     const [showReport, setShowReport] = useState(false);
     const [lastSessionDuration, setLastSessionDuration] = useState(0);
+    const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
+    const moodRef = useRef<string | null>(null);
 
     // Call hook
     const { isModelLoaded, isFaceDetected, expressions, error: modelError } = useFaceDetection(videoRef);
@@ -33,7 +40,12 @@ export default function FocusTimer() {
         if (isRunning && isFaceDetected && seconds > 0 && seconds % 60 === 0) {
             addXp(10);
         }
-    }, [seconds, isRunning, isFaceDetected, addXp]);
+        
+        // Track session start
+        if (isRunning && !sessionStartTime) {
+            setSessionStartTime(Date.now());
+        }
+    }, [seconds, isRunning, isFaceDetected, addXp, sessionStartTime]);
 
     // Emotion Logic
     const currentMood = useMemo(() => {
@@ -68,40 +80,73 @@ export default function FocusTimer() {
             moodState = { emoji: "😴", text: "Need a break?", color: "text-red-400", raw: mood };
         }
 
+        moodRef.current = moodState.raw;
         return moodState;
     }, [expressions]);
 
     // Track Mood History
     useEffect(() => {
         let interval: NodeJS.Timeout;
-        if (isRunning && currentMood) {
+        if (isRunning) {
             interval = setInterval(() => {
-                setMoodHistory(prev => [...prev, { timestamp: Date.now(), mood: currentMood.raw }]);
-            }, 5000); // Log every 5 seconds
+                const current = moodRef.current;
+                if (current) {
+                    setMoodHistory(prev => [...prev, { timestamp: Date.now(), mood: current }]);
+                }
+            }, 3000); // Consistent 3-second logging 
         }
         return () => clearInterval(interval);
-    }, [isRunning, currentMood]);
+    }, [isRunning]);
 
-    const handleStopSession = () => {
+    const handleStartSession = () => {
+        setMoodHistory([]);
+        setSessionStartTime(Date.now());
+        startTimer();
+    };
+
+    const handleStopSession = async () => {
         pauseTimer();
         setLastSessionDuration(seconds);
+        
+        // Persist to Firebase
+        if (user && moodHistory.length > 0) {
+            const sessionId = sessionStartTime || Date.now();
+            const historyRef = ref(realtimeDb, `users/${user.uid}/emotionHistory/${sessionId}`);
+            await set(historyRef, {
+                duration: seconds,
+                timestamp: sessionId,
+                history: moodHistory
+            });
+        }
+        
         setShowReport(true);
+        setSessionStartTime(null);
     };
 
     const handleCloseReport = () => {
         setShowReport(false);
         setMoodHistory([]);
+        setWasAutoPaused(false);
         resetTimer();
     };
 
-    // Auto-pause logic
-    useEffect(() => {
-        if (!isModelLoaded) return;
+    const handleManualPause = () => {
+        setWasAutoPaused(false);
+        pauseTimer();
+    };
 
-        if (isRunning && !isFaceDetected && strictMode) {
+    // Auto-pause & resume logic
+    useEffect(() => {
+        if (!isModelLoaded || !strictMode) return;
+
+        if (isRunning && !isFaceDetected) {
             pauseTimer();
+            setWasAutoPaused(true);
+        } else if (!isRunning && isFaceDetected && wasAutoPaused) {
+            startTimer();
+            setWasAutoPaused(false);
         }
-    }, [isFaceDetected, isRunning, isModelLoaded, pauseTimer, strictMode]);
+    }, [isFaceDetected, isRunning, isModelLoaded, pauseTimer, startTimer, strictMode, wasAutoPaused]);
 
     // Initialize Camera Natively
     useEffect(() => {
@@ -226,7 +271,7 @@ export default function FocusTimer() {
             <div className="flex space-x-4">
                 {!isRunning ? (
                     <button
-                        onClick={startTimer}
+                        onClick={handleStartSession}
                         disabled={!isFaceDetected}
                         className={`flex items-center space-x-2 rounded-lg px-6 py-3 font-semibold text-white transition-all ${isFaceDetected ? 'bg-blue-600 hover:bg-blue-500' : 'bg-gray-700 cursor-not-allowed opacity-50'}`}
                     >
@@ -236,7 +281,7 @@ export default function FocusTimer() {
                 ) : (
                     <>
                         <button
-                            onClick={pauseTimer}
+                            onClick={handleManualPause}
                             className="flex items-center space-x-2 rounded-lg bg-yellow-600 px-6 py-3 font-semibold text-white transition-all hover:bg-yellow-500"
                         >
                             <Pause className="h-5 w-5" />

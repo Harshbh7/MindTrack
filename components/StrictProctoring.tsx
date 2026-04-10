@@ -6,7 +6,7 @@ import { AlertTriangle, Lock, LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function StrictProctoring() {
-    const { logout } = useAuth();
+    const { logout, isAdmin } = useAuth();
     const router = useRouter();
     const [showWarning, setShowWarning] = useState(false);
     const [violationType, setViolationType] = useState<"tab-switch" | "fullscreen-exit" | null>(null);
@@ -41,6 +41,8 @@ export default function StrictProctoring() {
 
     // Detect Tab Switch / Blur
     useEffect(() => {
+        if (isAdmin) return;
+
         const handleVisibilityChange = () => {
             if (document.hidden && !isPaused) {
                 setViolationType("tab-switch");
@@ -111,6 +113,7 @@ export default function StrictProctoring() {
         );
     }
 
+    if (isAdmin) return null;
     if (!showWarning && isFullScreen) return null;
 
     return (

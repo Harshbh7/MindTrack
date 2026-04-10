@@ -120,7 +120,7 @@ export default function FocusBattle() {
     }, [started, gameOver, stream]);
 
     return (
-        <div className="bg-gray-900 border-2 border-red-900/50 rounded-2xl p-6 w-full max-w-2xl mx-auto shadow-[0_0_50px_rgba(220,38,38,0.2)] relative overflow-hidden">
+        <div className="bg-white dark:bg-gray-900 border-2 border-red-200 dark:border-red-900/50 rounded-2xl p-6 w-full max-w-2xl mx-auto shadow-[0_0_50px_rgba(220,38,38,0.2)] relative overflow-hidden transition-colors">
             {/* Background Texture */}
             <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
 
@@ -137,7 +137,7 @@ export default function FocusBattle() {
 
                 {!started && !gameOver ? (
                     <div className="text-center py-10">
-                        <p className="text-gray-400 mb-6 max-w-sm mx-auto">
+                        <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-sm mx-auto">
                             Challenge an opponent. Look away, and you lose HP. Last one standing wins XP.
                         </p>
                         <button
@@ -152,7 +152,7 @@ export default function FocusBattle() {
                     <div className="grid grid-cols-2 gap-8">
                         {/* YOU */}
                         <div className="flex flex-col items-center">
-                            <div className="relative w-full aspect-video rounded-xl overflow-hidden border-2 border-green-500 shadow-lg mb-4 bg-black">
+                            <div className="relative w-full aspect-video rounded-xl overflow-hidden border-2 border-green-500 shadow-lg mb-4 bg-gray-100 dark:bg-black">
                                 <video ref={videoRef} autoPlay muted className="w-full h-full object-cover transform -scale-x-100" />
                                 {!isFaceDetected && !gameOver && (
                                     <div className="absolute inset-0 bg-red-500/50 flex items-center justify-center animate-pulse">
@@ -160,32 +160,32 @@ export default function FocusBattle() {
                                     </div>
                                 )}
                             </div>
-                            <div className="w-full bg-gray-800 h-4 rounded-full overflow-hidden border border-gray-700">
+                            <div className="w-full bg-gray-200 dark:bg-gray-800 h-4 rounded-full overflow-hidden border border-gray-300 dark:border-gray-700">
                                 <div
                                     className="h-full bg-gradient-to-r from-red-600 to-green-500 transition-all duration-300"
                                     style={{ width: `${players.find(p => p.isSelf)?.hp}%` }}
                                 ></div>
                             </div>
                             <div className="flex justify-between w-full mt-2 text-sm font-bold">
-                                <span className="text-green-400">YOU</span>
-                                <span className="text-white">{players.find(p => p.isSelf)?.hp} HP</span>
+                                <span className="text-green-500 dark:text-green-400">YOU</span>
+                                <span className="text-gray-900 dark:text-white">{players.find(p => p.isSelf)?.hp} HP</span>
                             </div>
                         </div>
 
                         {/* OPPONENT */}
                         <div className="flex flex-col items-center opacity-80">
-                            <div className="relative w-full aspect-video rounded-xl overflow-hidden border-2 border-red-500 shadow-lg mb-4 bg-gray-800 flex items-center justify-center">
+                            <div className="relative w-full aspect-video rounded-xl overflow-hidden border-2 border-red-500 shadow-lg mb-4 bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
                                 <Skull className="w-16 h-16 text-red-900" />
                             </div>
-                            <div className="w-full bg-gray-800 h-4 rounded-full overflow-hidden border border-gray-700">
+                            <div className="w-full bg-gray-200 dark:bg-gray-800 h-4 rounded-full overflow-hidden border border-gray-300 dark:border-gray-700">
                                 <div
                                     className="h-full bg-red-600 transition-all duration-300"
                                     style={{ width: `${players.find(p => !p.isSelf)?.hp}%` }}
                                 ></div>
                             </div>
                             <div className="flex justify-between w-full mt-2 text-sm font-bold">
-                                <span className="text-red-400">DARK AI</span>
-                                <span className="text-white">{players.find(p => !p.isSelf)?.hp} HP</span>
+                                <span className="text-red-500 dark:text-red-400">DARK AI</span>
+                                <span className="text-gray-900 dark:text-white">{players.find(p => !p.isSelf)?.hp} HP</span>
                             </div>
                         </div>
                     </div>

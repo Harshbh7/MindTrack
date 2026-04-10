@@ -138,10 +138,10 @@ export default function DashboardPage() {
             {/* Welcome Banner */}
             <div className="flex flex-col md:flex-row justify-between items-end md:items-center gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">
-                        Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">{displayName}</span>! 👋
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+                        Welcome back, <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 dark:from-purple-400 dark:to-pink-600">{displayName}</span>! 👋
                     </h1>
-                    <p className="text-gray-400">Time to unlock your full potential.</p>
+                    <p className="text-gray-600 dark:text-gray-400">Time to unlock your full potential.</p>
                 </div>
                 <div className="flex gap-3">
                     <Link href="/dashboard/learning" className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors flex items-center shadow-lg shadow-purple-500/20">
@@ -153,51 +153,51 @@ export default function DashboardPage() {
             {/* Top Stats Cards */}
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 {/* Lifetime Card */}
-                <div className="relative overflow-hidden rounded-xl border border-gray-800 bg-gray-900/50 p-6 backdrop-blur-sm hover:border-purple-500/30 transition-colors group">
+                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:border-purple-500/30 transition-colors group">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <Trophy className="h-24 w-24 text-purple-500" />
                     </div>
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-lg bg-purple-500/10 text-purple-400">
+                        <div className="p-3 rounded-lg bg-purple-100 text-purple-600 dark:bg-purple-500/10 dark:text-purple-400">
                             <Trophy className="h-6 w-6" />
                         </div>
-                        <h3 className="text-sm font-medium text-gray-400">Lifetime Focus</h3>
+                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Lifetime Focus</h3>
                     </div>
-                    <p className="text-3xl font-bold text-white">{formatTimeDetailed(stats.lifetimeSeconds)}</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">{formatTimeDetailed(stats.lifetimeSeconds)}</p>
                     <p className="text-xs text-purple-400 mt-2 flex items-center">
                         Total focus journey
                     </p>
                 </div>
 
                 {/* Today Card */}
-                <div className="relative overflow-hidden rounded-xl border border-gray-800 bg-gray-900/50 p-6 backdrop-blur-sm hover:border-green-500/30 transition-colors group">
+                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:border-green-500/30 transition-colors group">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <Zap className="h-24 w-24 text-green-500" />
                     </div>
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-lg bg-green-500/10 text-green-400">
+                        <div className="p-3 rounded-lg bg-green-100 text-green-600 dark:bg-green-500/10 dark:text-green-400">
                             <Zap className="h-6 w-6" />
                         </div>
-                        <h3 className="text-sm font-medium text-gray-400">Focused Today</h3>
+                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Focused Today</h3>
                     </div>
-                    <p className="text-3xl font-bold text-white">{formatTimeDetailed(stats.todaySeconds)}</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">{formatTimeDetailed(stats.todaySeconds)}</p>
                     <p className="text-xs text-green-400 mt-2 flex items-center">
                         <Activity className="h-3 w-3 mr-1" /> Active today
                     </p>
                 </div>
 
                 {/* Monthly Card */}
-                <div className="relative overflow-hidden rounded-xl border border-gray-800 bg-gray-900/50 p-6 backdrop-blur-sm hover:border-blue-500/30 transition-colors group">
+                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:border-blue-500/30 transition-colors group">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <Calendar className="h-24 w-24 text-blue-500" />
                     </div>
                     <div className="flex items-center gap-4 mb-4">
-                        <div className="p-3 rounded-lg bg-blue-500/10 text-blue-400">
+                        <div className="p-3 rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-500/10 dark:text-blue-400">
                             <Calendar className="h-6 w-6" />
                         </div>
-                        <h3 className="text-sm font-medium text-gray-400">This Month</h3>
+                        <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">This Month</h3>
                     </div>
-                    <p className="text-3xl font-bold text-white">{formatTimeDetailed(stats.monthSeconds)}</p>
+                    <p className="text-3xl font-bold text-gray-900 dark:text-white">{formatTimeDetailed(stats.monthSeconds)}</p>
                     <p className="text-xs text-gray-500 mt-2">
                         Monthly Cumulative
                     </p>
@@ -214,11 +214,11 @@ export default function DashboardPage() {
                     <ProductivityHeatmap />
 
                     {/* Activity Chart */}
-                    <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-                        <h3 className="text-lg font-semibold text-white mb-6">Recent Activity</h3>
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Recent Activity</h3>
                         <div className="h-[300px] w-full">
                             {chartData.length > 0 ? (
-                                <ResponsiveContainer width="100%" height="100%">
+                                <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                                     <RechartsBarChart data={chartData}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" vertical={false} />
                                         <XAxis dataKey="name" stroke="#6b7280" axisLine={false} tickLine={false} />
@@ -264,9 +264,9 @@ export default function DashboardPage() {
                     <Leaderboard />
 
                     {/* Daily Quote */}
-                    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-                        <h3 className="text-lg font-bold text-gray-200 mb-4">Daily Quote</h3>
-                        <blockquote className="italic text-gray-400 leading-relaxed">
+                    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm rounded-2xl p-6 transition-colors">
+                        <h3 className="text-lg font-bold text-gray-900 dark:text-gray-200 mb-4">Daily Quote</h3>
+                        <blockquote className="italic text-gray-600 dark:text-gray-400 leading-relaxed">
                             "Focus is the key to productivity. Let MindTrack help you achieve your goals."
                         </blockquote>
                     </div>

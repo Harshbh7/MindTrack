@@ -62,21 +62,21 @@ export default function TodoWidget() {
     };
 
     return (
-        <div className="bg-gray-900 border border-gray-800 rounded-xl p-4">
-            <h3 className="font-bold text-white mb-4">Quick Tasks</h3>
+        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 shadow-sm rounded-xl p-4 transition-colors">
+            <h3 className="font-bold text-gray-900 dark:text-white mb-4">Quick Tasks</h3>
             <div className="space-y-2 mb-4 max-h-48 overflow-y-auto pr-2">
                 {todos.map(t => (
                     <div key={t.id} className="flex items-center gap-2 group">
                         <button
                             onClick={() => toggle(t.id)}
-                            className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${t.done ? 'bg-green-600 border-green-600' : 'border-gray-600 hover:border-gray-500'}`}
+                            className={`w-5 h-5 rounded-md border flex items-center justify-center transition-colors ${t.done ? 'bg-green-500 border-green-500 dark:bg-green-600 dark:border-green-600' : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'}`}
                         >
                             {t.done && <Check className="w-3 h-3 text-white" />}
                         </button>
-                        <span className={`text-sm flex-1 ${t.done ? 'text-gray-500 line-through' : 'text-gray-200'}`}>
+                        <span className={`text-sm flex-1 ${t.done ? 'text-gray-400 dark:text-gray-500 line-through' : 'text-gray-700 dark:text-gray-200'}`}>
                             {t.text}
                         </span>
-                        <button onClick={() => removeTask(t.id)} className="text-gray-600 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <button onClick={() => removeTask(t.id)} className="text-gray-400 hover:text-red-500 dark:text-gray-600 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity">
                             <Trash2 className="w-3 h-3" />
                         </button>
                     </div>
@@ -89,11 +89,11 @@ export default function TodoWidget() {
                     onChange={e => setNewItem(e.target.value)}
                     onKeyDown={e => e.key === 'Enter' && add()}
                     placeholder="New task..."
-                    className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-1 text-sm text-white focus:outline-none focus:border-purple-500"
+                    className="flex-1 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-1 text-sm text-gray-900 dark:text-white focus:outline-none focus:border-purple-500 dark:focus:border-purple-500"
                 />
                 <button
                     onClick={add}
-                    className="bg-purple-600 hover:bg-purple-500 text-white p-1 rounded-lg"
+                    className="bg-purple-600 hover:bg-purple-500 text-white p-1 rounded-lg transition-colors"
                 >
                     <Plus className="w-4 h-4" />
                 </button>

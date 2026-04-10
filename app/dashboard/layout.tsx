@@ -7,12 +7,14 @@ import Sidebar from "@/components/Sidebar";
 import MusicPlayer from "@/components/MusicPlayer";
 import StrictProctoring from "@/components/StrictProctoring";
 
+import BroadcastBanner from "@/components/BroadcastBanner";
+
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     return (
         <ProtectedRoute>
-            <div className="flex h-screen bg-gray-950 text-white relative">
+            <div className="flex h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white relative transition-colors">
                 <StrictProctoring />
                 <MusicPlayer />
 
@@ -22,6 +24,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                 />
 
                 <div className="flex flex-1 flex-col overflow-hidden">
+                    <BroadcastBanner />
                     <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
                     <main className="flex-1 overflow-auto p-4 md:p-6 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent">
                         {children}

@@ -10,6 +10,9 @@ import { ref, onValue, set, push, remove } from "firebase/database";
 interface Task {
     id: string;
     content: string;
+    priority: 'low' | 'medium' | 'high';
+    category?: string;
+    createdAt?: number;
 }
 
 interface Column {
@@ -38,6 +41,7 @@ export default function KanbanBoard() {
     const { user } = useAuth();
     const [data, setData] = useState<BoardData>(initialData);
     const [newTaskContent, setNewTaskContent] = useState("");
+    const [newTaskPriority, setNewTaskPriority] = useState<'low' | 'medium' | 'high'>('medium');
     const [isAdding, setIsAdding] = useState(false);
     const [activeCol, setActiveCol] = useState<string | null>(null);
 
@@ -58,6 +62,10 @@ export default function KanbanBoard() {
                     },
                     columnOrder: initialData.columnOrder,
                 };
+                // Ensure task data has new fields
+                Object.keys(validatedData.tasks).forEach(tid => {
+                    if (!validatedData.tasks[tid].priority) validatedData.tasks[tid].priority = 'medium';
+                });
                 // Ensure taskIds are arrays
                 (Object.keys(validatedData.columns) as Array<keyof typeof validatedData.columns>).forEach(key => {
                     if (!validatedData.columns[key].taskIds) validatedData.columns[key].taskIds = [];
@@ -144,7 +152,13 @@ export default function KanbanBoard() {
         if (!newTaskContent.trim()) return;
 
         const newTaskId = `task-${Date.now()}`;
-        const newTask = { id: newTaskId, content: newTaskContent };
+        const newTask: Task = { 
+            id: newTaskId, 
+            content: newTaskContent,
+            priority: newTaskPriority,
+            category: 'General',
+            createdAt: Date.now()
+        };
 
         const column = data.columns[columnId];
         const newTaskIds = [...column.taskIds, newTaskId];
@@ -167,6 +181,7 @@ export default function KanbanBoard() {
         setData(newState);
         saveBoard(newState);
         setNewTaskContent("");
+        setNewTaskPriority('medium');
         setIsAdding(false);
     };
 
@@ -199,12 +214,20 @@ export default function KanbanBoard() {
                 {data.columnOrder.map((columnId) => {
                     const column = data.columns[columnId];
                     const tasks = column.taskIds.map(taskId => data.tasks[taskId]).filter(Boolean);
+                    
+                    const headerGradients = {
+                        'todo': 'from-purple-600/20 to-pink-600/5 border-purple-500/20',
+                        'in-progress': 'from-blue-600/20 to-cyan-600/5 border-blue-500/20',
+                        'done': 'from-emerald-600/20 to-teal-600/5 border-emerald-500/20'
+                    };
 
                     return (
-                        <div key={column.id} className="w-full lg:w-80 flex-shrink-0 flex flex-col bg-gray-900 rounded-xl border border-gray-800">
-                            <div className="p-4 border-b border-gray-800 flex justify-between items-center">
-                                <h3 className="font-semibold text-gray-200">{column.title}</h3>
-                                <span className="bg-gray-800 text-gray-400 text-xs px-2 py-1 rounded-full">
+                        <div key={column.id} className="w-full lg:w-80 flex-shrink-0 flex flex-col bg-gray-900/40 backdrop-blur-xl rounded-2xl border border-gray-800/50 shadow-2xl overflow-hidden">
+                            <div className={`p-4 border-b bg-gradient-to-br ${headerGradients[columnId as keyof typeof headerGradients]} flex justify-between items-center bg-opacity-10`}>
+                                <div className="flex items-center gap-2">
+                                    <h3 className="font-bold text-white tracking-tight">{column.title}</h3>
+                                </div>
+                                <span className="bg-black/30 backdrop-blur-md text-white text-[10px] font-black px-2 py-0.5 rounded-full border border-white/10">
                                     {tasks.length}
                                 </span>
                             </div>
@@ -218,54 +241,84 @@ export default function KanbanBoard() {
                                     >
                                         {tasks.map((task, index) => (
                                             <Draggable key={task.id} draggableId={task.id} index={index}>
-                                                {(provided, snapshot) => (
-                                                    <div
-                                                        ref={provided.innerRef}
-                                                        {...provided.draggableProps}
-                                                        {...provided.dragHandleProps}
-                                                        className={`bg-gray-800 p-3 mb-3 rounded-lg border border-gray-700 shadow-sm group hover:border-blue-500/50 transition-all ${snapshot.isDragging ? "shadow-lg scale-105 rotate-1" : ""}`}
-                                                    >
-                                                        <div className="flex justify-between items-start">
-                                                            <p className="text-gray-200 text-sm">{task.content}</p>
-                                                            <button
-                                                                onClick={() => deleteTask(task.id, column.id)}
-                                                                className="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
-                                                            >
-                                                                <X className="w-3 h-3" />
-                                                            </button>
+                                                {(provided, snapshot) => {
+                                                    const priorityColors = {
+                                                        high: 'border-l-red-500',
+                                                        medium: 'border-l-yellow-500',
+                                                        low: 'border-l-blue-500'
+                                                    };
+
+                                                    return (
+                                                        <div
+                                                            ref={provided.innerRef}
+                                                            {...provided.draggableProps}
+                                                            {...provided.dragHandleProps}
+                                                            className={`bg-white/5 backdrop-blur-md p-4 mb-3 rounded-xl border border-white/10 border-l-4 ${priorityColors[task.priority]} shadow-lg group hover:bg-white/10 hover:border-white/20 transition-all ${snapshot.isDragging ? "shadow-2xl scale-105 z-50 ring-2 ring-purple-500/50" : ""}`}
+                                                        >
+                                                            <div className="flex justify-between items-start gap-3">
+                                                                <div className="flex-1">
+                                                                    <p className="text-white text-sm font-medium leading-relaxed">{task.content}</p>
+                                                                    {task.category && (
+                                                                        <span className="inline-block mt-2 text-[10px] font-bold text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20 uppercase tracking-tighter">
+                                                                            {task.category}
+                                                                        </span>
+                                                                    )}
+                                                                </div>
+                                                                <button
+                                                                    onClick={() => deleteTask(task.id, column.id)}
+                                                                    className="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-all transform hover:scale-110"
+                                                                >
+                                                                    <X className="w-4 h-4" />
+                                                                </button>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                )}
+                                                    );
+                                                }}
                                             </Draggable>
                                         ))}
                                         {provided.placeholder}
 
                                         {isAdding && activeCol === column.id ? (
-                                            <div className="mt-2 p-2 bg-gray-800 rounded-lg border border-gray-700 animate-in fade-in zoom-in-95">
+                                            <div className="mt-2 p-4 bg-gray-800/80 backdrop-blur-md rounded-xl border border-white/10 animate-in fade-in zoom-in-95 shadow-2xl">
                                                 <input
                                                     autoFocus
                                                     type="text"
-                                                    placeholder="Task description..."
-                                                    className="w-full bg-transparent text-sm text-white placeholder-gray-500 focus:outline-none mb-2"
+                                                    placeholder="What needs to be done?"
+                                                    className="w-full bg-transparent text-sm text-white placeholder-gray-500 focus:outline-none mb-3 border-b border-white/10 pb-2"
                                                     value={newTaskContent}
                                                     onChange={(e) => setNewTaskContent(e.target.value)}
-                                                    onKeyDown={(e) => {
-                                                        if (e.key === 'Enter') addTask(column.id);
-                                                        if (e.key === 'Escape') setIsAdding(false);
-                                                    }}
                                                 />
-                                                <div className="flex justify-end gap-2">
+                                                
+                                                <div className="flex flex-wrap gap-2 mb-4">
+                                                    {(['low', 'medium', 'high'] as const).map((p) => (
+                                                        <button
+                                                            key={p}
+                                                            onClick={() => setNewTaskPriority(p)}
+                                                            className={`text-[10px] uppercase font-black px-2 py-1 rounded-md border transition-all ${
+                                                                newTaskPriority === p 
+                                                                ? p === 'high' ? 'bg-red-500/20 border-red-500 text-red-500' 
+                                                                  : p === 'medium' ? 'bg-yellow-500/20 border-yellow-500 text-yellow-500'
+                                                                  : 'bg-blue-500/20 border-blue-500 text-blue-500'
+                                                                : 'bg-white/5 border-white/10 text-gray-500 hover:border-white/30'
+                                                            }`}
+                                                        >
+                                                            {p}
+                                                        </button>
+                                                    ))}
+                                                </div>
+
+                                                <div className="flex justify-between items-center">
                                                     <button
                                                         onClick={() => setIsAdding(false)}
-                                                        className="text-xs text-gray-400 hover:text-white px-2 py-1"
+                                                        className="text-xs text-gray-400 hover:text-white transition-colors"
                                                     >
                                                         Cancel
                                                     </button>
                                                     <button
                                                         onClick={() => addTask(column.id)}
-                                                        className="text-xs bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded"
+                                                        className="text-xs bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-2 rounded-lg shadow-lg shadow-purple-500/20 transition-all active:scale-95"
                                                     >
-                                                        Add
+                                                        Add Task
                                                     </button>
                                                 </div>
                                             </div>

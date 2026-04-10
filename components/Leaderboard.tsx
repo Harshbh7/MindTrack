@@ -44,12 +44,12 @@ export default function Leaderboard() {
     }, []);
 
     return (
-        <div className="bg-gradient-to-br from-yellow-900/20 to-gray-900 border border-yellow-700/30 rounded-2xl p-6 relative overflow-hidden">
+        <div className="bg-white dark:bg-gradient-to-br dark:from-yellow-900/20 dark:to-gray-900 border border-yellow-200 dark:border-yellow-700/30 shadow-sm rounded-2xl p-6 relative overflow-hidden transition-colors">
             <div className="absolute top-0 right-0 p-4 opacity-10">
                 <Trophy className="w-24 h-24 text-yellow-500" />
             </div>
 
-            <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                 <Crown className="w-6 h-6 text-yellow-500" />
                 Leaderboard
             </h3>
@@ -65,25 +65,25 @@ export default function Leaderboard() {
                     return (
                         <div
                             key={user.uid}
-                            className={`flex items-center justify-between p-3 rounded-xl border ${isMe ? 'bg-yellow-500/10 border-yellow-500/50' : 'bg-gray-800/50 border-gray-700'}`}
+                            className={`flex items-center justify-between p-3 rounded-xl border ${isMe ? 'bg-yellow-50 border-yellow-200 dark:bg-yellow-500/10 dark:border-yellow-500/50' : 'bg-gray-50 border-gray-200 dark:bg-gray-800/50 dark:border-gray-700'}`}
                         >
                             <div className="flex items-center gap-3">
                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${index === 0 ? 'bg-yellow-500 text-black' :
-                                        index === 1 ? 'bg-gray-300 text-black' :
-                                            index === 2 ? 'bg-amber-700 text-white' :
-                                                'bg-gray-700 text-gray-400'
+                                    index === 1 ? 'bg-gray-300 text-black' :
+                                        index === 2 ? 'bg-amber-700 text-white' :
+                                            'bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-400'
                                     }`}>
                                     {index + 1}
                                 </div>
                                 <div>
-                                    <p className={`font-semibold text-sm ${isMe ? 'text-yellow-200' : 'text-gray-200'}`}>
+                                    <p className={`font-semibold text-sm ${isMe ? 'text-yellow-600 dark:text-yellow-200' : 'text-gray-900 dark:text-gray-200'}`}>
                                         {user.name || "Anonymous"}
                                     </p>
-                                    <p className="text-xs text-gray-400">Level {Math.floor(user.xp / 100) + 1}</p>
+                                    <p className="text-xs text-gray-500 dark:text-gray-400">Level {Math.floor(user.xp / 100) + 1}</p>
                                 </div>
                             </div>
                             <div className="text-right">
-                                <p className="font-mono font-bold text-yellow-500">{user.xp} XP</p>
+                                <p className="font-mono font-bold text-yellow-600 dark:text-yellow-500">{user.xp} XP</p>
                             </div>
                         </div>
                     );
