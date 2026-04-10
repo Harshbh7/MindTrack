@@ -81,6 +81,12 @@ io.on("connection", (socket) => {
         socket.to(roomId).emit("note-update", content);
     });
 
+    // Shared Pomodoro Timer Sync
+    socket.on("timer-action", ({ roomId, action, seconds, mode }) => {
+        const isActive = action === "start";
+        socket.to(roomId).emit("timer-update", { seconds, isActive, mode });
+    });
+
     // --- Focus Battle / Gamification ---
     // In a real app, state should be on server. Here we relay events.
     socket.on("join-battle", (roomId, userId) => {
