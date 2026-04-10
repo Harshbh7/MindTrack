@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Editor, { loader, useMonaco } from "@monaco-editor/react";
-import { Play, Code as CodeIcon, RotateCw, Bot, Monitor, Maximize2, Terminal, Save, Zap, ZapOff, Layout, ChevronRight, MessageSquare, Sparkles } from "lucide-react";
+import { Play, Code as CodeIcon, RotateCw, Bot, Monitor, Maximize2, Terminal, Save, Zap, ZapOff, Layout, ChevronRight, MessageSquare, Sparkles, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MindSwal, Toast } from "@/lib/swal";
 

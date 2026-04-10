@@ -225,7 +225,7 @@ export default function LearningPage() {
             confirmButtonText: 'Yes, delete kit'
         });
 
-        if (!result.isConfirmed) return;
+        if (!result.isConfirmed || !user) return;
 
         try {
             const deckRef = ref(realtimeDb, `users/${user.uid}/decks/${deckId}`);
@@ -323,7 +323,7 @@ export default function LearningPage() {
                     targetDeckId = await handleCreateDeck(activeVideo?.title || "Video Study");
                 }
 
-                if (targetDeckId) {
+                if (targetDeckId && user) {
                     const flashcardsRef = ref(realtimeDb, `users/${user.uid}/decks/${targetDeckId}/cards`);
                     for (const card of data.flashcards) {
                         await push(flashcardsRef, {

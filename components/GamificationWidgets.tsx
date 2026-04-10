@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Crown, Trophy, Zap, Gamepad2, Gift } from "lucide-react";
+import { Crown, Trophy, Zap, Gamepad2, Gift, X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { realtimeDb } from "@/lib/firebase";
 import { ref, onValue, set, update, get } from "firebase/database";
