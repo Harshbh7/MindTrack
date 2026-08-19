@@ -1,49 +1,68 @@
-# DECISIONS.md — MindTrack (Frontend Challenge: Part 2)
+# DECISIONS.md
 
+**Track**: Part 2 — The Premium Home Page  
+**Project**: **MindTrack** — *The Mindful Study OS & Neural Focus Environment*  
 **Candidate**: Harsh Sharma  
-**Track**: Part 2 — The Premium Home Page (Study OS & Mindful Learning Hub)  
-**Live Deployed URL**: [https://mindtrack.vercel.app](https://mindtrack-taupe.vercel.app) *(or your deployed Vercel URL)*  
-**GitHub Repository**: [https://github.com/Harshbh7/MindTrack](https://github.com/Harshbh7/MindTrack)
+**Live URL**: [https://mindtrack-taupe.vercel.app](https://mindtrack-taupe.vercel.app) *(or active deployment)*  
+**GitHub Repository**: [https://github.com/Harshbh7/MindTrack](https://github.com/Harshbh7/MindTrack)  
 
 ---
 
-### 1. Architecture & Design Direction: Why Humanized Zen Minimalism over Generic Cyber-SaaS Templates?
+### 1. Architecture & Design Direction: Why Human-Centered Zen Over the "Generic SaaS Template"?
 
-**The Obvious Alternative Rejected**:  
-Most modern study apps follow a loud, neon-saturated "Dark Cyberpunk Hacker" or sterile "SaaS Landing Page" template (dense Bento grids filled with fake 5-star ratings, countdown hype timers, and distracting high-contrast gradients). This directly contradicts what an overwhelmed student actually needs when trying to focus.
+#### The Obvious Alternative Rejected:
+The cookie-cutter approach for developer/productivity tools is a dark-mode-only, neon-purple "Cyberpunk Bento Grid" loaded with fabricated social proof ("*50,000+ daily learners!*"), fake avatar carousels, and noisy motion graphics. 
 
-**Why Our Design Choice**:  
-We deliberately engineered a **"Human-First Zen Study OS"** combining warm parchment neutrals (`#faf8f5`) with deep obsidian dark mode (`#0c1017`) and soothing emerald/teal/amber accents.
-- **Interactive Headspace Matcher**: Rather than generic marketing copy, users immediately self-identify their cognitive state (*Overwhelmed*, *Scattered*, *Deep Flow*, *Lonely*) and get adaptive focus suggestions.
-- **Zero Fake Social Proof**: We strictly omitted fake "Trusted by 100,000+ students" badges and fictional testimonials. Instead, the interface sells itself through real interactive widgets: a live **4-4-4-4 Box Breathing Reset**, realistic study state cards, and transparent technical architecture.
-- **True Dual-Theme Parity**: Implemented a Tailwind CSS v4 custom variant (`@custom-variant dark (&:where(.dark, .dark *));`) ensuring zero half-dark artifacts, high WCAG contrast, and seamless transitions on both 390px mobile screens and 1440px desktop monitors.
+While that creates artificial visual stimulation, it fails the core user need: **a student visiting a study tool is already overwhelmed or distracted**. High-frequency animations and fake marketing metrics elevate cognitive load rather than solving it.
+
+#### Why Our Architecture Wins:
+1. **Interactive Headspace Matcher (Immediate Value in <3 Seconds)**:  
+   Instead of demanding that users read marketing claims, the hero section immediately asks how they feel (*Overwhelmed*, *In The Zone*, *Scattered*, or *Lonely*). Selecting a state dynamically shifts the layout, tone, and action paths to match their mental readiness.
+2. **Interactive Restorative Reset**:  
+   We embedded an interactive **4-4-4-4 Box Breathing visualizer** right on the landing page. It acts as an instant utility rather than a static visual asset.
+3. **True Dual-Theme Engine (No Half-Baked Dark Mode)**:  
+   Instead of basic CSS class toggling that breaks contrast, we configured a custom Tailwind CSS v4 variant (`@custom-variant dark (&:where(.dark, .dark *));`) paired with a tailored color system:
+   - **Light Mode**: Warm, grounding parchment neutrals (`#faf8f5` / `stone-100/900`) that prevent eye fatigue during daytime study.
+   - **Dark Mode**: Deep obsidian and cosmic slate (`#0c1017` / `#1c1917`) with emerald/teal/amber ambient glows.
+4. **100% Honest Copy**:  
+   Every claim on the page maps to real implemented capabilities — Google Gemini 2.5 Flash API route handlers, `face-api.js` neural presence detection, WebRTC signaling, and Firebase Realtime Database persistence. Zero fabricated testimonials or fake partner logos.
 
 ---
 
 ### 2. Time-Limit Trade-off & What I’d Build With a Full Week
 
-- **The Trade-off**:  
-  Under the time constraint, audio playback across the ambient soundscape and lo-fi hub uses static synthesized streams and Web Audio API oscillators, and the AI Roadmaps / Flashcards use synchronous Gemini API route handlers rather than streaming chunked SSE responses.
-- **With a Full Week**:
-  1. **Streaming Markdown & Generative UI**: Stream Gemini 2.5 Flash responses via Server-Sent Events (SSE) directly into dynamically rendering AST components with inline interactive quizzes.
-  2. **WebAssembly Biometric Pipeline**: Move `face-api.js` neural landmark detection into dedicated Web Workers with WebGL offscreen canvas to guarantee a constant 60 FPS even on lower-tier mobile hardware.
-  3. **Local-First P2P Sync (CRDTs)**: Implement Y.js over WebRTC mesh for zero-latency peer-to-peer collaborative notes that work completely offline.
+#### The Trade-off Made Under Time Constraints:
+To guarantee reliable end-to-end responsiveness and deployment stability, AI inferences (Study Plan generator, Roadmaps, Video summaries) run via standard **synchronous Next.js Route Handlers**, and real-time audio uses Web Audio API synthesized tones alongside streaming media rather than an adaptive, locally synthesized generative sound engine.
+
+#### What I’d Ship With a Full Dedicated Week:
+1. **Streaming Generative UI (SSE + AST Parser)**:  
+   Upgrade Gemini 2.5 Flash from unary JSON responses to Server-Sent Events (SSE) streaming directly into an interactive Markdown AST parser, rendering quizzes, code blocks, and diagrams in real-time chunk by chunk.
+2. **WebAssembly & Web Worker Offloading**:  
+   Move `face-api.js` tensor calculations and landmark heuristics into dedicated background Web Workers via OffscreenCanvas, ensuring zero main-thread jank and locked 60 FPS even on low-powered mobile devices.
+3. **Local-First CRDT State Layer**:  
+   Integrate Y.js over a WebRTC peer mesh with IndexedDB fallback for the collaborative editor, achieving true offline-first capability with automatic conflict resolution upon reconnection.
 
 ---
 
 ### 3. AI Usage & Personal Verification/Overhauls
 
-- **Where AI Was Used**:
-  - Drafting initial structured JSON schemas for AI study roadmaps and dynamic Gemini prompts for video cheat-sheet extraction.
-  - Generating initial CSS utility color pairings and regex replacement foundations for the real-time Markdown preview engine.
+#### Where AI Was Leveraged:
+- Scaffolding baseline prompt templates and strict JSON output schemas for Gemini 2.5 Flash API endpoints.
+- Generating initial CSS animation curve prototypes and regex tokens for the Markdown parser.
 
-- **What I Personally Verified & Rewrote**:
-  - **Color Contrast & Theme Hierarchy**: AI originally suggested hardcoded `text-white` and dark containers that vanished in light mode. I audited and rebuilt the token system across all 12 dashboard modules for crisp dark/light contrast.
-  - **Firebase Auth & Firestore State Synchronization**: Fixed race conditions in Google Sign-In and email signup where user document records in Firestore weren't created synchronously during OAuth popup handshakes.
-  - **Error Resilience & Boundary Handling**: Designed custom App Router error boundaries (`app/error.tsx`, `app/global-error.tsx`) to catch unhandled runtime promise rejections and prevent raw `[object Object]` crashes.
-  - **Strict Mobile Viewport & No-Horizontal-Overflow**: Manually audited CSS flex/grid structures from 360px up to 4K displays to ensure zero horizontal scrollbars.
+#### What I Personally Diagnosed, Audited & Rewrote:
+1. **Complete Contrast & Visual Hierarchy Audit**:  
+   AI models frequently output hardcoded `text-white` or dark backgrounds that become unreadable in light mode. I systematically inspected every card, input, table, and modal across all 12 modules to enforce strict light/dark token parity with high WCAG readability.
+2. **Firebase OAuth & Lifecycle Synchronization**:  
+   Rewrote the authentication pipeline in `app/login/page.tsx` and `app/signup/page.tsx` to eliminate race conditions during Google `signInWithPopup`, guaranteeing atomic user provisioning in Firestore.
+3. **Next.js App Router Error Boundaries**:  
+   Authored custom `app/error.tsx` and `app/global-error.tsx` handlers with safe error serialization to catch unhandled runtime promise rejections, permanently eliminating Next.js raw `[object Object]` error screen crashes.
+4. **Strict Viewport & Layout Engineering**:  
+   Manually audited responsive breakpoints from 390px (mobile) to 1440px+ (desktop) to ensure zero horizontal scrollbars, proper touch targets, and balanced vertical rhythm.
 
 ---
 
 ### 🎁 Bonus Round: Easter Egg
-- **Interactive Zen Trigger**: Click on the breathing widget or companion pet avatar to toggle peaceful meditative aura rings and unlock a hidden motivational quote in the terminal console!
+
+- **Hidden Zen Meditation Mode**:  
+  Double-click the **Feather Logo** in the top navigation bar or hover the **Companion Pet avatar** to activate an ambient pulse glow and trigger a peaceful focus quote in the browser developer console (`F12 -> Console`).
