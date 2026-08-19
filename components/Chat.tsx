@@ -94,17 +94,14 @@ export default function Chat({ roomId }: ChatProps) {
     };
 
     return (
-        <div className="flex h-full flex-col rounded-xl border border-gray-800 bg-gray-900 overflow-hidden">
-            <div className="border-b border-gray-800 p-4 flex justify-between items-center">
-                <h3 className="font-semibold text-white">Room Chat</h3>
+        <div className="flex h-full flex-col rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden shadow-sm transition-colors">
+            <div className="border-b border-gray-200 dark:border-gray-800 p-4 flex justify-between items-center">
+                <h3 className="font-semibold text-gray-900 dark:text-white">Room Chat</h3>
                 <div className="flex items-center space-x-2">
                     <span className={`h-2 w-2 rounded-full ${connectionStatus === 'Connected' ? 'bg-green-500' : 'bg-red-500'}`}></span>
-                    <span className="text-xs text-gray-400">{connectionStatus}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{connectionStatus}</span>
                 </div>
             </div>
-
-
-
 
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
                 {messages.length === 0 && (
@@ -116,8 +113,8 @@ export default function Chat({ roomId }: ChatProps) {
                     const isMe = msg.userId === user?.uid;
                     return (
                         <div key={msg.id} className={`flex ${isMe ? "justify-end" : "justify-start"}`}>
-                            <div className={`max-w-[70%] rounded-xl p-3 ${isMe ? "bg-blue-600 text-white" : "bg-gray-800 text-gray-200"}`}>
-                                {!isMe && <p className="mb-1 text-xs text-blue-400 font-bold">{msg.userName}</p>}
+                            <div className={`max-w-[70%] rounded-xl p-3 ${isMe ? "bg-blue-600 text-white shadow-sm" : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-200 border border-gray-200/60 dark:border-transparent"}`}>
+                                {!isMe && <p className="mb-1 text-xs text-blue-600 dark:text-blue-400 font-bold">{msg.userName}</p>}
                                 <p className="text-sm">{msg.text}</p>
                             </div>
                         </div>
@@ -126,11 +123,11 @@ export default function Chat({ roomId }: ChatProps) {
                 <div ref={messagesEndRef} />
             </div>
 
-            <form onSubmit={handleSendMessage} className="border-t border-gray-800 p-4">
+            <form onSubmit={handleSendMessage} className="border-t border-gray-200 dark:border-gray-800 p-4">
                 <div className="flex space-x-2">
                     <input
                         type="text"
-                        className="flex-1 rounded-lg border border-gray-700 bg-gray-800 p-2 text-white placeholder-gray-500 focus:border-blue-500 focus:outline-none"
+                        className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-blue-500 focus:outline-none shadow-sm text-sm"
                         placeholder={isSending ? "Sending..." : "Type a message..."}
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
@@ -139,7 +136,7 @@ export default function Chat({ roomId }: ChatProps) {
                     <button
                         type="submit"
                         disabled={isSending || !newMessage.trim()}
-                        className={`rounded-lg p-2 text-white transition-colors ${isSending || !newMessage.trim() ? 'bg-gray-700 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500'}`}
+                        className={`rounded-lg p-2 text-white transition-colors shadow-sm ${isSending || !newMessage.trim() ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-500'}`}
                     >
                         <Send className="h-5 w-5" />
                     </button>

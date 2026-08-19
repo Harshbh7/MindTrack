@@ -1,23 +1,23 @@
 <div align="center">
 
-# 🧠 MindTrack: The Cyber-Premium Study Ecosystem
+# 🧠 MindTrack: The Cyber-Premium Study OS
 
 ### AI-Driven • Real-time • High-Performance
 
 **MindTrack is a unified premium ecosystem designed to gamify, track, and optimize every second of your learning journey.**
 
-[![Next.js](https://img.shields.io/badge/Next.js-15.1.6-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.1.3-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
-[![Firebase](https://img.shields.io/badge/Firebase-11.9.0-FFCA28?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.1.6-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![Firebase](https://img.shields.io/badge/Firebase-12.9.0-FFCA28?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
 [![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-4.0-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.0-ff69b4?style=for-the-badge&logo=framer)](https://www.framer.com/motion/)
+[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.3-ff69b4?style=for-the-badge&logo=framer)](https://www.framer.com/motion/)
 
 </div>
 
 ---
 
 ## 🚀 Vision
-**MindTrack** is not just a productivity app; it's a "Study OS" built with a Cyber-Dark glassmorphic aesthetic. It combines **Computer Vision**, **AI Tutoring**, and **Real-time Collaboration** to create a focused and rewarding study environment.
+**MindTrack** is not just a productivity app; it's a **"Study OS"** built with a Cyber-Dark glassmorphic aesthetic. It leverages **Computer Vision**, **Large Language Models**, and **Real-time Synchronization** to create the ultimate focused environment for modern scholars.
 
 ---
 
@@ -25,71 +25,58 @@
 
 ### 🏠 1. Central Command Dashboard
 The hub of your productivity data.
-- **Activity Heatmap**: Visual GitHub-style contribution calendar for study sessions.
-- **Real-time Stats**: Track total focus hours, active streaks, and current XP levels.
-- **Micro-Widgets**: Floating widgets for Daily Quests, Music, and quick task management.
-- **Weekly Trends**: Bar charts visualizing focus duration across the last 7 days.
+- **Activity Heatmap**: A GitHub-style visual contribution calendar for all your study sessions.
+- **Deep Analytics**: Real-time bar charts (using Recharts) visualizing focus duration across the last 7 days.
+- **Micro-Widgets**: Floating widgets for Daily Quests, Todo management, and Study Goals.
+- **Live Stats**: Instant tracking of Total Focus Hours, Active Streaks, and Level Progress.
 
-### ⏱️ 2. AI Focus Timer (Neural tracking)
-The core engine of focus enforcement.
-- **Face-Tracking AI**: Uses `face-api.js` to ensure you are physically present.
-- **Gaze Verification**: Detects if your eyes are closed or if you are looking away from the screen.
-- **Auto-Pause/Resume**: Instantly halts study time the moment you lose focus.
-- **Emotion Recognition**: Analyzes your mood (Happy, Focused, Sad) during the session for the post-study report.
+### ⏱️ 2. AI Focus Engine (Neural Tracking)
+The heart of the ecosystem, ensuring maximum retention.
+- **Biometric Monitoring**: Uses `face-api.js` and MediaPipe to ensure physical presence and active engagement.
+- **Auto-Intelligence**: Instantly pauses your timer when you look away or lose focus, resuming the moment you return.
+- **Emotional Mapping**: Tracks your mood (Happy, Focused, Neutral) throughout the session to provide productivity-to-mood correlation reports.
 
-### 💻 3. Coding Arena (Cyber-IDE)
+### 🎥 3. AI Video Hub (New!)
+Turn passive watching into active learning.
+- **Instant Summaries**: Paste any study video topic and receive a structured Markdown "Cheat Sheet" powered by **Gemini 2.5 Flash**.
+- **Key Concepts Extraction**: The AI identifies critical terms and explains them in context.
+- **Seamless Integration**: Study while the AI generates your notes in the background.
+
+### 💻 4. Cyber-IDE (Integrated Coding Arena)
 A premium development environment for learning to code.
-- **MindTrack Vision Theme**: A custom glassmorphic Monaco theme optimized for low-eye strain.
-- **AI Reviewer**: One-click code analysis powered by Gemini 2.5 Flash to find bugs and optimize logic.
-- **Live Preview**: Integrated auto-run environment for real-time code execution visualization.
-- **Persistence**: Local storage integration ensures your snippets are saved across sessions.
+- **Glassmorphic Editor**: A custom Monaco-based IDE with "MindTrack Vision" theme.
+- **AI Code Review**: One-click analysis finds logic errors and suggests performance optimizations.
+- **Live Preview**: Built-in environment for real-time code execution and visualization.
 
-### 🎯 4. Focus Board (Project Management)
-A high-end Kanban board for organizing your learning path.
-- **Priority Matrix**: Tasks sorted by **High**, **Medium**, and **Low** impact.
-- **Drag-and-Drop**: Smooth, animated task transitions powered by `@hello-pangea/dnd`.
-- **Firebase Sync**: Updates reflect instantly across all your devices.
-- **Glassmorphic UI**: Ultra-clean translucent cards and vibrant priority markers.
+### ⚔️ 5. Focus Battle & Gamification
+Making consistency addictive.
+- **Focus Battles**: Compete in real-time "Focus Duels" with other students to see who stays in the zone longer.
+- **Pet System**: Each scholar has a virtual AI pet that grows and evolves as you complete your goals.
+- **Global Leaderboard**: Climb the ranks from "Novice" to "Zen Master" on the prestigious global stage.
+- **XP Ecosystem**: Earn experience points for every minute of focus, unlocking premium badges and UI themes.
 
-### 🧬 5. Learning Lab (SRS & AI Tutor)
-A science-backed space for memory retention.
-- **SRS Flashcards**: Implementations of the SM-2 algorithm for spaced repetition learning.
-- **AI Personalized Tutor**: A dedicated chat assistant that understands your learning resources.
-- **Resource Management**: Submit and organize PDFs, Video links, and articles.
-- **Spaced Review Engine**: Automatically schedules card reviews to optimize long-term memory.
+### 🎯 6. Focus Board (Project Management)
+High-end task organization for your learning path.
+- **Intelligent Kanban**: Animated task transitions powered by `@hello-pangea/dnd`.
+- **Priority Matrix**: Visual classification of tasks by impact and urgency.
+- **Cloud Sync**: Every task update is instantly synced via Firebase for a multi-device experience.
 
-### ⚡ 6. MindTrack Sync (Collaborative Notes)
-Real-time shared documentation with high-fidelity output.
-- **WebSocket Sync**: Multi-user real-time editing with sub-millisecond latency.
-- **Interactive Toolbar**: Formatting tools for Bold, Italic, Headings, and Code blocks.
-- **Markdown Preview**: Professional-grade typography and CSS rendering for high-quality note-taking.
-- **Presence Tracking**: Live indicators showing who is currently editing.
+### 🗺️ 7. AI Roadmap Master
+Mapping your path to expertise.
+- **Dynamic Curriculum**: Input a topic (e.g., "Deep Learning"), and the AI builds a specialized learning path.
+- **Progress Tracking**: Visual indicators show your current position on the mastery curve.
 
-### 🌐 7. Collaborative Study Rooms
-Private, synchronized virtual spaces for group study.
-- **WebRTC Video/Audio**: Peer-to-peer high-quality video calling via `simple-peer`.
-- **Shared Whiteboard**: Infinite canvas powered by `tldraw` for collaborative diagramming.
-- **Sync-Timer**: A global Pomodoro timer that synchronizes state across all room members.
-- **Room Chat**: Real-time communication during sessions.
+---
 
-### 🗺️ 8. AI Roadmap Generator
-Mapping your path to mastery.
-- **Goal Mapping**: Input any topic (e.g., "Master React"), and the AI generates a step-by-step path.
-- **Progress Tracking**: Mark roadmap phases as completed as you learn.
-- **Time Estimates**: AI-calculated durations for each learning phase.
+## 🔮 Future Expansion Roadmap (Coming Soon)
 
-### 📈 9. Emotional Analytics
-Data-driven self-awareness.
-- **Mood Trends**: View how your emotional state fluctuates during long study sessions.
-- **Focus Quality score**: A calculated metric combining duration and attention signals.
-- **Deep Historical Data**: Detailed logs of every session including primary mood and duration.
+We are constantly pushing the boundaries of what a Study OS can do. Here are some of the high-impact features currently in development:
 
-### 🏆 10. Gamification & Community
-Making consistency rewarding.
-- **Global Leaderboard**: Compete with students worldwide for the top spot.
-- **XP & Levels**: Earn experience for every minute of focus and every task completed.
-- **Achievements/Badges**: Unlock premium badges (Novice, Deep Thinker, Zen Master) for hitting milestones.
-- **Daily Quests**: Global challenges that reset every 24 hours.
+- **🤖 AI Voice Companion (Jarvis for Studying)**: An always-on voice assistant you can talk to. Ask questions, request quizzes, or command the dashboard completely hands-free using the Web Speech API and Gemini 2.5 Flash.
+- **🎵 Adaptive Focus Audio & Lo-Fi Hub**: A built-in spatial audio player that **adapts to your focus**. If the Face Tracking AI detects you losing focus, the music subtly changes tempo to bring you back into the zone.
+- **🐉 Pomodoro "Boss Fights"**: After completing a long focus session, face off against an "AI Boss". Defeat it by answering a quick quiz generated from your recent notes to claim bonus XP and loot.
+- **🗂️ Auto-Magic Flashcards (SRS System)**: Zero-friction studying. MindTrack will automatically read your collaborative notes and extract key definitions to create a deck of Spaced-Repetition Flashcards.
+- **👁️ Advanced Biometrics (Posture & Eye Strain)**: Utilizing `face-api.js` to track blink rate and posture, automatically reminding you of the 20-20-20 rule or dimming the screen if you slouch.
 
 ---
 
@@ -97,36 +84,50 @@ Making consistency rewarding.
 
 | Layer | Technologies |
 |---|---|
-| **Frontend** | Next.js 15 (App Router), React 19, TypeScript |
-| **Styling** | Tailwind CSS 4.0, Framer Motion (Glassmorphism) |
-| **Backend** | Firebase Realtime Database, Firestore, Auth |
-| **Real-time** | Socket.io (Standalone Server), WebRTC |
-| **AI / ML** | Google Gemini 2.5 Flash, face-api.js, MediaPipe |
-| **Visualization**| Recharts (Data Viz), Lucide (Icons) |
+| **Framework** | Next.js 16.1.6 (App Router), React 19.2.3, TypeScript |
+| **Styling** | Tailwind CSS 4.0, Framer Motion (Glassmorphism), Lucide Icons |
+| **Intelligence** | Google Gemini 2.5 Flash, face-api.js, MediaPipe Face Detection |
+| **Persistence** | Firebase Realtime Database, Firestore, Firebase Auth |
+| **Real-time** | Socket.io (Standalone Orchestrator), WebRTC (Simple-Peer) |
+| **Visualization**| Recharts (Data Viz), SweetAlert2 (Interactive Feedback) |
 
 ---
 
 ## 🏗️ Technical Architecture
-MindTrack uses a **Split-Server Architecture**:
-1. **Next.js Hub**: Handles the UI, Auth, AI Inference (Serverless), and Personal Data.
-2. **Socket-IO Orchestrator**: A dedicated server for real-time signaling, room synchronization, and collaborative editing.
-3. **P2P Video Mesh**: Direct peer-to-peer data flow for video to ensure low-latency communication.
+
+MindTrack operates on a **Distributed Twin-Server Model**:
+1. **The Hub (Next.js)**: Orchestrates the UI, AI Inference (Serverless), and Personal Data persistence.
+2. **The Pulse (Socket.io)**: A dedicated persistent server handling real-time signaling, collaborative state, and Focus Battles.
+3. **P2P Mesh**: High-bandwidth data flow for collaborative video and whiteboard (tldraw) sessions.
 
 ---
 
-## 🚀 Setup Instructions
+## 🚀 Setup & Installation
 
-1. **Clone & Install**:
+1. **Clone the Galaxy**:
    ```bash
    git clone https://github.com/your-repo/mindtrack.git
+   cd MindTrack
+   ```
+
+2. **Initialize Dependencies**:
+   ```bash
    npm install
    ```
-2. **Environment Variables**: Populate `.env.local` with your Firebase and Gemini keys.
-3. **Launch Ecosystem**:
+
+3. **Configure Environment**:
+   Create a `.env.local` file with your credentials:
+   ```env
+   NEXT_PUBLIC_FIREBASE_CONFIG={...}
+   GEMINI_API_KEY=your_key_here
+   OPENAI_API_KEY=optional_key
+   ```
+
+4. **Launch the Ecosystem**:
    ```bash
    npm run dev:all
    ```
-   *This command starts both the Next.js frontend and the Socket.io collaboration server.*
+   *This command leverages `concurrently` to start both the Next.js frontend and the Socket.io backend.*
 
 ---
 
@@ -134,6 +135,6 @@ MindTrack uses a **Split-Server Architecture**:
 
 Built with ❤️ by **Harsh Sharma**
 
-*MindTrack — Where focus meets intelligence.*
+*MindTrack — Performance through Intelligence.*
 
 </div>

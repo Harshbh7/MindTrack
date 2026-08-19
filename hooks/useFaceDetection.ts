@@ -62,7 +62,7 @@ export const useFaceDetection = (videoRef: React.RefObject<HTMLVideoElement | nu
                         // 1. Yaw (Left / Right)
                         const leftDist = nose.x - leftEdge.x;
                         const rightDist = rightEdge.x - nose.x;
-                        const yawRatio = leftDist / Math.max(rightDist, 1); 
+                        const yawRatio = leftDist / Math.max(rightDist, 1);
                         const isLookingLeftRight = yawRatio < 0.6 || yawRatio > 1.6;
 
                         // 2. Pitch (Up / Down)
@@ -82,7 +82,7 @@ export const useFaceDetection = (videoRef: React.RefObject<HTMLVideoElement | nu
 
                         // helper to get distance between two points
                         const dist = (p1: any, p2: any) => Math.hypot(p1.x - p2.x, p1.y - p2.y);
-                        
+
                         const calcEAR = (eye: any[]) => {
                             // eye is an array of 6 points
                             const vertical1 = dist(eye[1], eye[5]);
@@ -94,7 +94,7 @@ export const useFaceDetection = (videoRef: React.RefObject<HTMLVideoElement | nu
                         const leftEAR = calcEAR(leftEye);
                         const rightEAR = calcEAR(rightEye);
                         const avgEAR = (leftEAR + rightEAR) / 2;
-                        
+
                         // EAR < 0.2 usually means eyes are closed or squinting very heavily
                         const isEyesClosed = avgEAR < 0.22;
 
@@ -117,10 +117,19 @@ export const useFaceDetection = (videoRef: React.RefObject<HTMLVideoElement | nu
             }
         };
 
-        // Run detection loop
-        const intervalId = setInterval(detectFace, 500);
+        // Run detection loop safely
+        let isLooping = true;
+        const detectionLoop = async () => {
+            if (!isLooping) return;
+            await detectFace();
+            if (isLooping) setTimeout(detectionLoop, 500);
+        };
 
-        return () => clearInterval(intervalId);
+        detectionLoop();
+
+        return () => {
+            isLooping = false;
+        };
     }, [isModelLoaded]);
 
     return { isModelLoaded, isFaceDetected, expressions, error };

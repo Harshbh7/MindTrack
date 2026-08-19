@@ -1,28 +1,133 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #faf8f5;
+  --foreground: #1c1917;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --zen-sage: #4d7c5f;
+  --zen-sage-light: #e8f3ec;
+  --zen-sand: #f4ede4;
+  --zen-amber: #d97706;
+  --zen-lavender: #8b5cf6;
+  --zen-rose: #f43f5e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark,
+[data-theme="dark"],
+:root.dark {
+  --background: #0d1117;
+  --foreground: #f0f6fc;
+  --card: #161b22;
+  --card-foreground: #f0f6fc;
+  --zen-sage: #52a373;
+  --zen-sage-light: #12281d;
+  --zen-sand: #1f242c;
 }
+
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  selection-background-color: #52a37333;
+}
+
+/* Zen Keyframes & Animations */
+@keyframes breathe {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 25px rgba(82, 163, 115, 0.2);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 50px rgba(82, 163, 115, 0.45);
+  }
+}
+
+@keyframes aura-drift {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -40px) scale(1.1);
+  }
+  66% {
+    transform: translate(-25px, 25px) scale(0.95);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes float-gentle {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.65;
+  }
+}
+
+.animate-breathe {
+  animation: breathe 8s ease-in-out infinite;
+}
+
+.animate-aura {
+  animation: aura-drift 18s ease-in-out infinite alternate;
+}
+
+.animate-float-gentle {
+  animation: float-gentle 5s ease-in-out infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 3s ease-in-out infinite;
+}
+
+/* Glassmorphic Warm Cards */
+.zen-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(229, 231, 235, 0.8);
+}
+
+.dark .zen-card {
+  background: rgba(22, 27, 34, 0.75);
+  border: 1px solid rgba(48, 54, 61, 0.7);
+}
+
+/* Smooth Glow Accents */
+.zen-glow-sage {
+  box-shadow: 0 10px 40px -10px rgba(82, 163, 115, 0.25);
+}
+
+.zen-glow-amber {
+  box-shadow: 0 10px 40px -10px rgba(217, 119, 6, 0.22);
+}
+
+.zen-glow-lavender {
+  box-shadow: 0 10px 40px -10px rgba(139, 92, 246, 0.22);
 }
 
 /* Flashcard Flip Utilities */

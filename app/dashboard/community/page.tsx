@@ -211,18 +211,18 @@ export default function CommunityPage() {
         <div className="space-y-8 animate-in fade-in duration-500">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-                        <Globe className="w-8 h-8 text-green-400" />
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                        <Globe className="w-8 h-8 text-green-500" />
                         Community Decks
                     </h1>
-                    <p className="text-gray-400 mt-1">Discover and clone shared study materials from the community.</p>
+                    <p className="text-gray-600 dark:text-gray-400 mt-1">Discover and clone shared study materials from the community.</p>
                 </div>
                 <div className="relative w-full md:w-72">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                     <input 
                         type="text"
                         placeholder="Search decks or authors..."
-                        className="w-full bg-gray-900 border border-gray-800 rounded-lg py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:ring-1 focus:ring-green-500"
+                        className="w-full bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-lg py-2 pl-10 pr-4 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-green-500 shadow-sm"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -230,26 +230,26 @@ export default function CommunityPage() {
             </header>
 
             {filteredDecks.length === 0 ? (
-                <div className="flex flex-col items-center justify-center py-20 bg-gray-900/50 border border-dashed border-gray-800 rounded-3xl">
-                    <Sparkles className="h-12 w-12 text-gray-700 mb-4" />
+                <div className="flex flex-col items-center justify-center py-20 bg-white dark:bg-gray-900/50 border border-dashed border-gray-200 dark:border-gray-800 rounded-3xl">
+                    <Sparkles className="h-12 w-12 text-gray-400 dark:text-gray-700 mb-4" />
                     <p className="text-gray-500 text-lg">No decks found matching your search.</p>
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredDecks.map((deck) => (
-                        <div key={deck.id} className="bg-gray-900 border border-gray-800 rounded-2xl p-6 hover:border-green-500/30 transition-all group flex flex-col justify-between">
+                        <div key={deck.id} className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 hover:border-green-500/50 shadow-sm transition-all group flex flex-col justify-between">
                             <div>
-                                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-green-400 transition-colors flex items-center justify-between">
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-green-500 transition-colors flex items-center justify-between">
                                     <span className="truncate mr-2">{deck.title}</span>
                                     {deck.isFeatured && (
-                                        <span className="text-[10px] bg-yellow-500/10 text-yellow-500 px-2 py-0.5 rounded border border-yellow-500/20 whitespace-nowrap">Featured</span>
+                                        <span className="text-[10px] bg-yellow-500/10 text-yellow-600 dark:text-yellow-500 px-2 py-0.5 rounded border border-yellow-500/20 whitespace-nowrap font-semibold">Featured</span>
                                     )}
                                 </h3>
                                 <div className="flex flex-wrap gap-2 mb-4">
-                                    <span className="text-[10px] bg-green-500/10 text-green-400 px-2 py-1 rounded-full border border-green-500/20">
+                                    <span className="text-[10px] bg-green-500/10 text-green-600 dark:text-green-400 px-2 py-1 rounded-full border border-green-500/20 font-medium">
                                         {deck.cards.length} Cards
                                     </span>
-                                    <span className="text-[10px] bg-blue-500/10 text-blue-400 px-2 py-1 rounded-full border border-blue-500/20">
+                                    <span className="text-[10px] bg-blue-500/10 text-blue-600 dark:text-blue-400 px-2 py-1 rounded-full border border-blue-500/20 font-medium">
                                         {deck.downloads} Downloads
                                     </span>
                                 </div>
@@ -267,7 +267,7 @@ export default function CommunityPage() {
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => handleClone(deck)}
-                                    className="flex-1 bg-gray-800 hover:bg-green-600 text-white py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-lg"
+                                    className="flex-1 bg-gray-100 hover:bg-green-600 text-gray-800 hover:text-white dark:bg-gray-800 dark:text-white dark:hover:bg-green-600 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-sm"
                                 >
                                     <Download className="h-4 w-4" />
                                     Clone
@@ -276,14 +276,14 @@ export default function CommunityPage() {
                                     <div className="flex gap-2">
                                         <button
                                             onClick={() => handleEditSharedDeck(deck)}
-                                            className="p-2.5 bg-gray-800 hover:bg-blue-600 text-white rounded-xl transition-all"
+                                            className="p-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-blue-600 text-gray-700 dark:text-white hover:text-white rounded-xl transition-all"
                                             title="Edit Title"
                                         >
                                             <Calendar className="h-4 w-4" /> 
                                         </button>
                                         <button
                                             onClick={() => handleDeleteSharedDeck(deck.id)}
-                                            className="p-2.5 bg-gray-800 hover:bg-red-600 text-white rounded-xl transition-all"
+                                            className="p-2.5 bg-gray-100 dark:bg-gray-800 hover:bg-red-600 text-gray-700 dark:text-white hover:text-white rounded-xl transition-all"
                                             title="Delete Shared Deck"
                                         >
                                             <Globe className="h-4 w-4" />

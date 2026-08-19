@@ -41,13 +41,13 @@ export default function CollaborativeNotes({ roomId = "global-notes" }: Collabor
     // Enhanced Regex Parser with modern typography
     const parseMarkdown = (text: string) => {
         return text
-            .replace(/^# (.*$)/gim, '<h1 class="text-3xl md:text-4xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 tracking-tight">$1</h1>')
-            .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mb-4 mt-8 text-purple-300 border-b border-purple-500/20 pb-2">$1</h2>')
-            .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mb-3 mt-6 text-purple-200/90">$1</h3>')
-            .replace(/\*\*(.*)\*\*/gim, '<strong class="text-white font-bold">$1</strong>')
-            .replace(/\*(.*)\*/gim, '<em class="text-purple-200/70 italic">$1</em>')
-            .replace(/^\- (.*$)/gim, '<li class="ml-4 mb-2 flex items-start gap-2 text-gray-300"><span class="text-purple-500 mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-500 shrink-0"></span><span>$1</span></li>')
-            .replace(/`(.*?)`/gim, '<code class="bg-purple-500/20 text-purple-300 px-1.5 py-0.5 rounded font-mono text-sm border border-purple-500/30">$1</code>')
+            .replace(/^# (.*$)/gim, '<h1 class="text-3xl md:text-4xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-500 tracking-tight">$1</h1>')
+            .replace(/^## (.*$)/gim, '<h2 class="text-2xl font-bold mb-4 mt-8 text-purple-700 dark:text-purple-300 border-b border-purple-200 dark:border-purple-500/20 pb-2">$1</h2>')
+            .replace(/^### (.*$)/gim, '<h3 class="text-xl font-semibold mb-3 mt-6 text-purple-900 dark:text-purple-200/90">$1</h3>')
+            .replace(/\*\*(.*)\*\*/gim, '<strong class="text-gray-900 dark:text-white font-bold">$1</strong>')
+            .replace(/\*(.*)\*/gim, '<em class="text-purple-700 dark:text-purple-200/70 italic">$1</em>')
+            .replace(/^\- (.*$)/gim, '<li class="ml-4 mb-2 flex items-start gap-2 text-gray-700 dark:text-gray-300"><span class="text-purple-600 dark:text-purple-500 mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-600 dark:bg-purple-500 shrink-0"></span><span>$1</span></li>')
+            .replace(/`(.*?)`/gim, '<code class="bg-purple-100 text-purple-700 dark:bg-purple-500/20 dark:text-purple-300 px-1.5 py-0.5 rounded font-mono text-sm border border-purple-200 dark:border-purple-500/30">$1</code>')
             .replace(/\n\n/gim, '<div class="h-4"></div>')
             .replace(/\n/gim, '<br/>');
     };
@@ -124,25 +124,25 @@ export default function CollaborativeNotes({ roomId = "global-notes" }: Collabor
                         <div className="bg-gradient-to-br from-purple-600 to-pink-600 p-2 rounded-xl shadow-lg shadow-purple-500/20">
                             <Zap className="w-5 h-5 text-white" />
                         </div>
-                        <h1 className="text-3xl font-black text-white tracking-tight">
-                            MindTrack <span className="text-purple-500 uppercase text-sm tracking-[0.2em] font-bold">Sync</span>
+                        <h1 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">
+                            MindTrack <span className="text-purple-600 dark:text-purple-500 uppercase text-sm tracking-[0.2em] font-bold">Sync</span>
                         </h1>
                         <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold border transition-all duration-500 ${
-                            isConnected ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-red-500/10 text-red-400 border-red-500/20'
+                            isConnected ? 'bg-green-500/10 text-green-600 dark:text-green-400 border-green-500/20' : 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/20'
                         }`}>
                             <span className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
                             {status}
                         </div>
                     </div>
-                    <p className="text-gray-400 text-sm md:text-base font-medium">Real-time collaborative intelligence engine.</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-sm md:text-base font-medium">Real-time collaborative intelligence engine.</p>
                 </div>
 
                 <div className="flex flex-wrap gap-2">
                     <button
                         onClick={handleCopy}
-                        className="flex items-center gap-2 bg-white/5 hover:bg-white/10 border border-white/10 text-gray-300 px-4 py-2.5 rounded-xl transition-all active:scale-95 group font-medium"
+                        className="flex items-center gap-2 bg-gray-100 dark:bg-white/5 hover:bg-gray-200 dark:hover:bg-white/10 border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 px-4 py-2.5 rounded-xl transition-all active:scale-95 group font-medium"
                     >
-                        {isCopied ? <Check className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4 group-hover:text-purple-400" />}
+                        {isCopied ? <Check className="w-4 h-4 text-green-500 dark:text-green-400" /> : <Copy className="w-4 h-4 group-hover:text-purple-500" />}
                         <span>{isCopied ? "Copied" : "Copy Raw"}</span>
                     </button>
                     <button
@@ -152,8 +152,8 @@ export default function CollaborativeNotes({ roomId = "global-notes" }: Collabor
                         <Printer className="w-4 h-4" />
                         <span>Export PDF</span>
                     </button>
-                    <div className="h-10 w-[1px] bg-white/10 mx-1 hidden md:block" />
-                    <div className="flex bg-white/5 rounded-xl p-1 border border-white/10">
+                    <div className="h-10 w-[1px] bg-gray-200 dark:bg-white/10 mx-1 hidden md:block" />
+                    <div className="flex bg-gray-100 dark:bg-white/5 rounded-xl p-1 border border-gray-200 dark:border-white/10">
                         {(["split", "editor", "preview"] as const).map((mode) => (
                             <button
                                 key={mode}
@@ -161,7 +161,7 @@ export default function CollaborativeNotes({ roomId = "global-notes" }: Collabor
                                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all uppercase tracking-wider ${
                                     viewMode === mode 
                                     ? "bg-purple-600 text-white shadow-md shadow-purple-500/20" 
-                                    : "text-gray-500 hover:text-gray-300"
+                                    : "text-gray-500 hover:text-gray-800 dark:hover:text-gray-300"
                                 }`}
                             >
                                 {mode}
@@ -175,25 +175,25 @@ export default function CollaborativeNotes({ roomId = "global-notes" }: Collabor
             <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="flex items-center gap-2 bg-white/5 border border-white/10 p-2 rounded-2xl print:hidden backdrop-blur-md sticky top-0 z-10"
+                className="flex items-center gap-2 bg-white/80 dark:bg-white/5 border border-gray-200 dark:border-white/10 p-2 rounded-2xl print:hidden backdrop-blur-md sticky top-0 z-10 shadow-sm"
             >
-                <div className="flex items-center gap-1 pr-2 border-r border-white/5">
-                    <button onClick={() => insertText("# ", "")} className="p-2 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white transition-colors" title="Heading 1"><Type className="w-5 h-5" /></button>
-                    <button onClick={() => insertText("## ", "")} className="p-2 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white transition-colors font-bold text-xs" title="Heading 2">H2</button>
+                <div className="flex items-center gap-1 pr-2 border-r border-gray-200 dark:border-white/5">
+                    <button onClick={() => insertText("# ", "")} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" title="Heading 1"><Type className="w-5 h-5" /></button>
+                    <button onClick={() => insertText("## ", "")} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-bold text-xs" title="Heading 2">H2</button>
                 </div>
-                <div className="flex items-center gap-1 px-2 border-r border-white/5">
-                    <button onClick={() => insertText("**", "**")} className="p-2 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white transition-colors" title="Bold"><Bold className="w-5 h-5" /></button>
-                    <button onClick={() => insertText("*", "*")} className="p-2 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white transition-colors" title="Italic"><Italic className="w-5 h-5" /></button>
+                <div className="flex items-center gap-1 px-2 border-r border-gray-200 dark:border-white/5">
+                    <button onClick={() => insertText("**", "**")} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" title="Bold"><Bold className="w-5 h-5" /></button>
+                    <button onClick={() => insertText("*", "*")} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" title="Italic"><Italic className="w-5 h-5" /></button>
                 </div>
                 <div className="flex items-center gap-1 px-2">
-                    <button onClick={() => insertText("- ", "")} className="p-2 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white transition-colors" title="List"><List className="w-5 h-5" /></button>
-                    <button onClick={() => insertText("`", "`")} className="p-2 hover:bg-white/10 rounded-lg text-gray-400 hover:text-white transition-colors font-mono font-bold" title="Code">{"{}"}</button>
+                    <button onClick={() => insertText("- ", "")} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors" title="List"><List className="w-5 h-5" /></button>
+                    <button onClick={() => insertText("`", "`")} className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-mono font-bold" title="Code">{"{}"}</button>
                 </div>
                 <div className="flex-1" />
                 <div className="flex items-center gap-3 px-3">
                     <div className="flex -space-x-2">
                          {[1, 2].map((i) => (
-                             <div key={i} className={`w-8 h-8 rounded-full border-2 border-[#0a0a0b] bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-[10px] text-white font-black shadow-lg`}>
+                             <div key={i} className={`w-8 h-8 rounded-full border-2 border-white dark:border-[#0a0a0b] bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-[10px] text-white font-black shadow-lg`}>
                                  {i === 1 ? user?.email?.[0].toUpperCase() || "A" : "U"}
                              </div>
                          ))}
@@ -212,20 +212,20 @@ export default function CollaborativeNotes({ roomId = "global-notes" }: Collabor
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -20 }}
-                            className={`flex-1 flex flex-col bg-white/[0.03] border border-white/10 rounded-3xl p-6 backdrop-blur-sm print:hidden transition-all duration-500 ${viewMode === 'editor' ? 'max-w-4xl mx-auto' : ''}`}
+                            className={`flex-1 flex flex-col bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 rounded-3xl p-6 backdrop-blur-sm print:hidden shadow-sm transition-all duration-500 ${viewMode === 'editor' ? 'max-w-4xl mx-auto' : ''}`}
                         >
                             <div className="flex items-center justify-between mb-4">
-                                <div className="flex items-center gap-2 text-purple-400 text-xs font-black uppercase tracking-[0.2em]">
+                                <div className="flex items-center gap-2 text-purple-600 dark:text-purple-400 text-xs font-black uppercase tracking-[0.2em]">
                                     <FileText className="w-4 h-4 text-purple-500" />
                                     <span>Workspace</span>
                                 </div>
-                                <span className="text-[10px] text-gray-600 font-mono">UTF-8 • Markdown</span>
+                                <span className="text-[10px] text-gray-500 dark:text-gray-600 font-mono">UTF-8 • Markdown</span>
                             </div>
                             <textarea
                                 ref={textAreaRef}
                                 value={markdown}
                                 onChange={handleChange}
-                                className="flex-1 bg-transparent text-gray-300 font-mono resize-none focus:outline-none leading-relaxed text-sm scrollbar-thin scrollbar-thumb-white/10"
+                                className="flex-1 bg-transparent text-gray-800 dark:text-gray-300 font-mono resize-none focus:outline-none leading-relaxed text-sm scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-white/10"
                                 placeholder="# Initialize your thoughts..."
                             />
                         </motion.div>
@@ -240,14 +240,14 @@ export default function CollaborativeNotes({ roomId = "global-notes" }: Collabor
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: 20 }}
-                            className={`flex-1 flex flex-col bg-white/[0.03] border border-white/10 rounded-3xl p-8 md:p-12 overflow-y-auto print:w-full print:h-full print:border-none print:shadow-none bg-gradient-to-br from-white/[0.02] to-transparent backdrop-blur-md transition-all duration-500 ${viewMode === 'preview' ? 'max-w-4xl mx-auto' : ''}`}
+                            className={`flex-1 flex flex-col bg-white dark:bg-white/[0.03] border border-gray-200 dark:border-white/10 rounded-3xl p-8 md:p-12 overflow-y-auto print:w-full print:h-full print:border-none print:shadow-none shadow-sm transition-all duration-500 ${viewMode === 'preview' ? 'max-w-4xl mx-auto' : ''}`}
                         >
-                            <div className="flex items-center gap-2 mb-8 text-pink-400 text-xs font-black uppercase tracking-[0.2em] print:hidden">
+                            <div className="flex items-center gap-2 mb-8 text-pink-600 dark:text-pink-400 text-xs font-black uppercase tracking-[0.2em] print:hidden">
                                 <Globe className="w-4 h-4 text-pink-500" />
                                 <span>Preview Render</span>
                             </div>
                             <div 
-                                className="prose prose-invert max-w-none text-gray-300 leading-relaxed prose-headings:text-white prose-strong:text-purple-400 prose-code:text-pink-300 selection:bg-purple-500/30 font-sans" 
+                                className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-300 leading-relaxed prose-headings:text-gray-900 dark:prose-headings:text-white prose-strong:text-purple-600 dark:prose-strong:text-purple-400 prose-code:text-pink-600 dark:prose-code:text-pink-300 selection:bg-purple-500/30 font-sans" 
                                 dangerouslySetInnerHTML={{ __html: parseMarkdown(markdown) }} 
                             />
                         </motion.div>

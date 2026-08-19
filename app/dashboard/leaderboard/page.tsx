@@ -88,17 +88,17 @@ export default function LeaderboardPage() {
 
     return (
         <div className="flex h-[calc(100vh-6rem)] flex-col gap-6">
-            <div className="flex items-center justify-between rounded-xl border border-gray-800 bg-gray-900 p-6">
+            <div className="flex items-center justify-between rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm transition-colors">
                 <div>
-                    <h2 className="text-2xl font-bold text-white flex items-center">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white flex items-center">
                         <Trophy className="mr-3 h-6 w-6 text-yellow-500" />
                         Leaderboard
                     </h2>
-                    <p className="text-gray-400 mt-1">Top students by focus time</p>
+                    <p className="text-gray-600 dark:text-gray-400 mt-1">Top students by focus time</p>
                 </div>
             </div>
 
-            <div className="flex-1 overflow-auto rounded-xl border border-gray-800 bg-gray-900 p-6">
+            <div className="flex-1 overflow-auto rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm transition-colors">
                 {loading ? (
                     <div className="text-center text-gray-500 py-20">Loading rankings...</div>
                 ) : leaders.length === 0 ? (
@@ -106,21 +106,21 @@ export default function LeaderboardPage() {
                 ) : (
                     <div className="space-y-4">
                         {leaders.map((leader, index) => (
-                            <div key={leader.uid} className="flex items-center justify-between p-4 rounded-xl bg-gray-950 border border-gray-800 hover:border-purple-500/50 transition-colors">
+                            <div key={leader.uid} className="flex items-center justify-between p-4 rounded-xl bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 hover:border-purple-500/50 shadow-sm transition-colors">
                                 <div className="flex items-center space-x-4">
                                     <div className={`flex items-center justify-center w-8 h-8 rounded-full font-bold 
                                         ${index === 0 ? 'bg-yellow-500 text-black' :
                                             index === 1 ? 'bg-gray-400 text-black' :
                                                 index === 2 ? 'bg-orange-600 text-white' :
-                                                    'bg-gray-800 text-gray-400'}`}>
+                                                    'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-400'}`}>
                                         {index + 1}
                                     </div>
                                     <div>
-                                        <p className="font-semibold text-white">{leader.name}</p>
+                                        <p className="font-semibold text-gray-900 dark:text-white">{leader.name}</p>
                                         <p className="text-xs text-gray-500">Rank {index + 1}</p>
                                     </div>
                                 </div>
-                                <div className="flex items-center text-blue-400 font-mono font-medium">
+                                <div className="flex items-center text-blue-600 dark:text-blue-400 font-mono font-medium">
                                     <Clock className="mr-2 h-4 w-4" />
                                     {formatTime(leader.totalSeconds)}
                                 </div>

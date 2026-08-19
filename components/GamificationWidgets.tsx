@@ -5,6 +5,7 @@ import { Crown, Trophy, Zap, Gamepad2, Gift, X } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { realtimeDb } from "@/lib/firebase";
 import { ref, onValue, set, update, get } from "firebase/database";
+import { MindSwal } from "@/lib/swal";
 
 interface Quest {
     id: string;
@@ -110,10 +111,17 @@ export default function GamificationWidgets() {
                  
                  newlyEarned.forEach(id => {
                      const b = BADGES.find(x => x.id === id);
-                     if (typeof window !== 'undefined') {
-                         // Simple toast simulation
-                         alert(`🏆 Unlocked Achievement: ${b?.name}!`);
-                     }
+                    MindSwal.fire({
+                        title: 'Achievement Unlocked!',
+                        html: `<div class="text-4xl mb-4 animate-bounce">${b?.icon || "🏆"}</div><div class="text-white font-bold text-lg">${b?.name}</div>`,
+                        background: '#0f111a',
+                        color: '#e6edf3',
+                        confirmButtonColor: '#4f46e5',
+                        confirmButtonText: 'Great!',
+                        customClass: {
+                            popup: 'border border-white/10 rounded-3xl backdrop-blur-xl'
+                        }
+                    });
                  });
             }
             setUnlockedBadges(earned);
@@ -142,42 +150,43 @@ export default function GamificationWidgets() {
         <div className="grid gap-6">
             {/* Character / Pet Widget */}
             <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm shadow-sm transition-colors">
-                <div className="absolute top-0 right-0 p-3 opacity-10">
-                    <Gamepad2 className="h-32 w-32" />
-                </div>
-
                 <div className="relative z-10 flex items-center justify-between">
                     <div>
-                        <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">Your Companion</h3>
+                        <div className="flex items-center gap-2 mb-1">
+                            <div className="p-1 rounded-md bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-400">
+                                <Gamepad2 className="h-4 w-4" />
+                            </div>
+                            <h3 className="text-lg font-bold text-gray-900 dark:text-white">Your Companion</h3>
+                        </div>
                         <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Level {calculatedLevel} • &quot;{currentSkin.name}&quot;</p>
 
-                        <div className="flex items-center gap-2 mb-2">
+                        <div className="flex items-center gap-2 mb-3">
                             <div className="h-2 w-24 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                                <div className="h-full bg-gradient-to-r from-green-400 to-emerald-500 transition-all duration-500" style={{ width: `${progressPercentage}%` }} />
+                                <div className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-500" style={{ width: `${progressPercentage}%` }} />
                             </div>
-                            <span className="text-[10px] text-green-500 dark:text-green-400">{progressPercentage}% to Lvl {calculatedLevel + 1}</span>
+                            <span className="text-[10px] text-green-600 dark:text-green-400 font-semibold">{progressPercentage}% to Lvl {calculatedLevel + 1}</span>
                         </div>
 
                         <button 
                             onClick={() => setIsCustomizing(true)}
-                            className="px-3 py-1.5 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg text-xs text-gray-700 dark:text-white transition-colors"
+                            className="px-3 py-1.5 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-700 rounded-lg text-xs font-medium text-gray-800 dark:text-white transition-colors shadow-sm"
                         >
                             Customize Skin
                         </button>
                     </div>
 
                     {/* Dynamic Pet Skin */}
-                    <div className={`h-20 w-20 rounded-full bg-gradient-to-br ${currentSkin.color} p-1 animate-pulse shadow-lg flex items-center justify-center transition-all duration-500`}>
+                    <div className={`h-20 w-20 rounded-full bg-gradient-to-br ${currentSkin.color} p-1 shadow-lg flex items-center justify-center transition-all duration-500 hover:scale-105`}>
                         <div className="text-4xl">{currentSkin.emoji}</div>
                     </div>
                 </div>
 
                 {/* Customization Modal Overlay */}
                 {isCustomizing && (
-                    <div className="absolute inset-0 z-20 bg-gray-900/95 backdrop-blur-sm animate-in fade-in flex flex-col p-4">
+                    <div className="absolute inset-0 z-20 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm animate-in fade-in flex flex-col p-4 rounded-xl border border-gray-200 dark:border-gray-700 transition-colors">
                         <div className="flex justify-between items-center mb-4">
-                            <span className="text-sm font-bold text-white">Select Companion Skin</span>
-                            <button onClick={() => setIsCustomizing(false)} className="text-gray-500 hover:text-white"><X className="h-4 w-4" /></button>
+                            <span className="text-sm font-bold text-gray-900 dark:text-white">Select Companion Skin</span>
+                            <button onClick={() => setIsCustomizing(false)} className="text-gray-400 hover:text-gray-700 dark:hover:text-white"><X className="h-4 w-4" /></button>
                         </div>
                         <div className="grid grid-cols-2 gap-2 overflow-y-auto">
                             {SKINS.map(skin => (
@@ -190,10 +199,10 @@ export default function GamificationWidgets() {
                                         }
                                         setIsCustomizing(false);
                                     }}
-                                    className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${currentSkin.id === skin.id ? 'border-indigo-500 bg-indigo-500/10' : 'border-gray-700 bg-gray-800/50 hover:border-gray-500'}`}
+                                    className={`p-3 rounded-xl border flex flex-col items-center gap-2 transition-all ${currentSkin.id === skin.id ? 'border-purple-500 bg-purple-50 dark:bg-purple-500/10' : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 hover:border-gray-400 dark:hover:border-gray-500'}`}
                                 >
                                     <span className="text-2xl">{skin.emoji}</span>
-                                    <span className="text-[10px] text-white font-medium">{skin.name}</span>
+                                    <span className="text-[10px] text-gray-900 dark:text-white font-medium">{skin.name}</span>
                                 </button>
                             ))}
                         </div>

@@ -64,20 +64,20 @@ export default function ParticipantList({ roomId }: ParticipantListProps) {
     }, [roomId]);
 
     return (
-        <div className="rounded-xl border border-gray-800 bg-gray-900 p-4">
-            <h3 className="mb-4 font-semibold text-white flex items-center">
-                <User className="mr-2 h-4 w-4 text-blue-400" />
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm transition-colors">
+            <h3 className="mb-4 font-semibold text-gray-900 dark:text-white flex items-center">
+                <User className="mr-2 h-4 w-4 text-blue-500" />
                 Participants ({participants.length})
             </h3>
             <div className="space-y-3">
                 {participants.map((participant) => (
                     <div key={participant.id} className="flex items-center space-x-3">
-                        <div className="h-8 w-8 rounded-full bg-blue-600/20 flex items-center justify-center text-blue-400 font-bold text-xs uppercase">
+                        <div className="h-8 w-8 rounded-full bg-blue-50 dark:bg-blue-600/20 flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-xs uppercase border border-blue-200 dark:border-transparent">
                             {participant.name.slice(0, 2)}
                         </div>
-                        <span className="text-sm text-gray-300 truncate">{participant.name}</span>
+                        <span className="text-sm text-gray-800 dark:text-gray-300 truncate font-medium">{participant.name}</span>
                         {participant.id === user?.uid && (
-                            <span className="text-xs text-gray-500">(You)</span>
+                            <span className="text-xs text-gray-400 dark:text-gray-500">(You)</span>
                         )}
                     </div>
                 ))}

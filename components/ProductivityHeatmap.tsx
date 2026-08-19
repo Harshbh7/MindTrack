@@ -55,7 +55,7 @@ export default function ProductivityHeatmap() {
                                 className={`h-8 w-full rounded-md transition-all hover:ring-2 hover:ring-indigo-400 hover:ring-offset-1 hover:ring-offset-white dark:hover:ring-offset-gray-900 ${INTENSITY_COLORS[day.level as keyof typeof INTENSITY_COLORS]}`}
                                 title={`${day.date}: Level ${day.level}`}
                             />
-                            <span className="text-[10px] text-gray-400 dark:text-gray-600">{day.day}</span>
+                            <span className="text-[10px] text-gray-600 dark:text-gray-400 font-medium">{day.day}</span>
                         </div>
                     ))}
                 </div>

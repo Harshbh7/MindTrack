@@ -73,14 +73,14 @@ export default function AnalyticsPage() {
         });
     }, [sessions]);
 
-    if (loading) return <div className="p-10 text-center animate-pulse text-gray-400">Loading your focus data...</div>;
+    if (loading) return <div className="p-10 text-center animate-pulse text-gray-500 dark:text-gray-400">Loading your focus data...</div>;
 
     if (sessions.length === 0) {
         return (
             <div className="flex flex-col items-center justify-center h-[60vh] text-center p-6">
-                <Brain className="w-16 h-16 text-gray-700 mb-4" />
-                <h2 className="text-xl font-bold text-white mb-2">No Analytics Data Yet</h2>
-                <p className="text-gray-400 max-w-sm">
+                <Brain className="w-16 h-16 text-gray-400 dark:text-gray-700 mb-4" />
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-2">No Analytics Data Yet</h2>
+                <p className="text-gray-600 dark:text-gray-400 max-w-sm">
                     Complete your first focus session with the camera turned on to see your emotional productivity breakdown.
                 </p>
             </div>
@@ -91,19 +91,19 @@ export default function AnalyticsPage() {
         <div className="space-y-8 animate-in fade-in duration-500">
             <header className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-                        <TrendingUp className="w-8 h-8 text-blue-400" />
+                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                        <TrendingUp className="w-8 h-8 text-blue-500" />
                         Emotional Analytics
                     </h1>
-                    <p className="text-gray-400 mt-1">Deep insights into your focus habits and mood patterns.</p>
+                    <p className="text-gray-600 dark:text-gray-400 mt-1">Deep insights into your focus habits and mood patterns.</p>
                 </div>
             </header>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 {/* Mood Distribution */}
-                <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-xl">
-                    <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                        <Smile className="w-5 h-5 text-green-400" />
+                <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+                        <Smile className="w-5 h-5 text-green-500" />
                         Emotion Breakdown
                     </h3>
                     <div className="h-[300px] w-full">
@@ -123,7 +123,7 @@ export default function AnalyticsPage() {
                                     ))}
                                 </Pie>
                                 <Tooltip 
-                                    contentStyle={{ backgroundColor: '#111827', border: '1px solid #374151', borderRadius: '8px' }}
+                                    contentStyle={{ backgroundColor: '#111827', border: '1px solid #374151', borderRadius: '8px', color: '#fff' }}
                                     itemStyle={{ textTransform: 'capitalize' }}
                                 />
                                 <Legend verticalAlign="bottom" height={36}/>
@@ -133,19 +133,19 @@ export default function AnalyticsPage() {
                 </div>
 
                 {/* Focus Score trend */}
-                <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-xl">
-                    <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                        <Brain className="w-5 h-5 text-purple-400" />
+                <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+                        <Brain className="w-5 h-5 text-purple-500" />
                         Focus Quality Trend
                     </h3>
                     <div className="h-[300px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={focusTrendData}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+                                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" className="dark:stroke-gray-800" />
                                 <XAxis dataKey="time" stroke="#9ca3af" fontSize={12} tickLine={false} />
                                 <YAxis stroke="#9ca3af" fontSize={12} tickLine={false} domain={[0, 100]} />
                                 <Tooltip 
-                                   contentStyle={{ backgroundColor: '#111827', border: '1px solid #374151', borderRadius: '8px' }}
+                                   contentStyle={{ backgroundColor: '#111827', border: '1px solid #374151', borderRadius: '8px', color: '#fff' }}
                                 />
                                 <Line 
                                     type="monotone" 
@@ -162,22 +162,22 @@ export default function AnalyticsPage() {
             </div>
 
             {/* Session Logs */}
-            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-xl">
-                 <h3 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
-                    <Clock className="w-5 h-5 text-gray-400" />
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm">
+                 <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-2">
+                    <Clock className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                     Recent Sessions
                 </h3>
                 <div className="overflow-x-auto">
                     <table className="w-full text-left">
                         <thead>
-                            <tr className="border-b border-gray-800 text-gray-400 text-xs uppercase tracking-wider">
+                            <tr className="border-b border-gray-200 dark:border-gray-800 text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wider">
                                 <th className="pb-4 font-semibold">Date</th>
                                 <th className="pb-4 font-semibold">Duration</th>
                                 <th className="pb-4 font-semibold">Focus Score</th>
                                 <th className="pb-4 font-semibold">Primary Mood</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-800">
+                        <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
                             {sessions.slice().reverse().map((s, idx) => {
                                  const total = s.history.length;
                                  const focusMoods = ["neutral", "happy", "surprised"];
@@ -189,12 +189,12 @@ export default function AnalyticsPage() {
                                  }, s.history[0].mood) : "N/A";
 
                                 return (
-                                    <tr key={idx} className="text-sm text-gray-300 hover:bg-gray-800/30 transition-colors">
-                                        <td className="py-4 font-medium text-white">{new Date(s.timestamp).toLocaleDateString()}</td>
+                                    <tr key={idx} className="text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+                                        <td className="py-4 font-medium text-gray-900 dark:text-white">{new Date(s.timestamp).toLocaleDateString()}</td>
                                         <td className="py-4">{Math.round(s.duration / 60)} mins</td>
                                         <td className="py-4">
                                             <div className="flex items-center gap-2">
-                                                <div className="w-16 h-1.5 bg-gray-700 rounded-full overflow-hidden">
+                                                <div className="w-16 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                                                     <div className="h-full bg-blue-500" style={{ width: `${focusScore}%` }} />
                                                 </div>
                                                 {focusScore}%

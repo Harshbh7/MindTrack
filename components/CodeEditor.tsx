@@ -178,7 +178,7 @@ export default function CodeEditor() {
                 body: JSON.stringify({ code: codeToReview, language })
             });
             const data = await res.json();
-            setAiSuggestion(data.suggestion);
+            if (data.review) setAiSuggestion(data.review);
         } catch (err) {
             setAiSuggestion("Failed to get AI review. Please try again.");
         } finally {

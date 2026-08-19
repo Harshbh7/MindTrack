@@ -361,43 +361,43 @@ export default function LearningPage() {
     return (
         <div className="flex h-[calc(100vh-6rem)] gap-6 relative">
             {/* Main Content Area */}
-            <div className="flex-1 flex flex-col overflow-hidden rounded-xl border border-gray-800 bg-gray-900">
+            <div className="flex-1 flex flex-col overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition-colors">
 
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-b border-gray-800">
+                <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
                     <div className="flex items-center">
                         {activeVideo && (
                             <button
                                 onClick={() => setActiveVideo(null)}
-                                className="mr-4 rounded-full p-2 hover:bg-gray-800 text-gray-400 hover:text-white transition-colors"
+                                className="mr-4 rounded-full p-2 hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
                             >
                                 <ArrowLeft className="h-5 w-5" />
                             </button>
                         )}
-                        <h2 className="flex items-center text-2xl font-bold text-white">
-                            <BookOpen className="mr-3 h-6 w-6 text-purple-400" />
+                        <h2 className="flex items-center text-2xl font-bold text-gray-900 dark:text-white">
+                            <BookOpen className="mr-3 h-6 w-6 text-purple-600 dark:text-purple-400" />
                             {activeVideo ? "Study Mode" : "Learning Resources"}
                         </h2>
                     </div>
                     {!activeVideo && (
                         <div className="flex items-center gap-4">
-                            <div className="flex bg-gray-950 p-1 rounded-lg border border-gray-800">
+                            <div className="flex bg-gray-100 dark:bg-gray-950 p-1 rounded-lg border border-gray-200 dark:border-gray-800">
                                 <button
                                     onClick={() => setActiveTab("library")}
-                                    className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${activeTab === "library" ? "bg-purple-600 text-white shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
+                                    className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${activeTab === "library" ? "bg-purple-600 text-white shadow-md" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"}`}
                                 >
                                     Video Library
                                 </button>
                                 <button
                                     onClick={() => setActiveTab("cards")}
-                                    className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${activeTab === "cards" ? "bg-purple-600 text-white shadow-lg" : "text-gray-500 hover:text-gray-300"}`}
+                                    className={`px-4 py-1.5 rounded-md text-xs font-bold transition-all ${activeTab === "cards" ? "bg-purple-600 text-white shadow-md" : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"}`}
                                 >
                                     Personal Deck
                                 </button>
                             </div>
                             <button
                                 onClick={() => setShowSubmitModal(true)}
-                                className="hidden sm:flex items-center space-x-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                                className="hidden sm:flex items-center space-x-2 bg-purple-600 hover:bg-purple-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm"
                             >
                                 <Plus className="h-4 w-4" />
                                 <span>Submit Content</span>
@@ -562,23 +562,23 @@ export default function LearningPage() {
                         /* Resource List Grid */
                         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2">
                             {/* Self-Study Custom URL Card */}
-                            <div className="group overflow-hidden rounded-xl border border-dashed border-gray-700 bg-gray-900/30 transition-all hover:border-purple-500/50 p-6 flex flex-col justify-center items-center text-center">
+                            <div className="group overflow-hidden rounded-xl border border-dashed border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/30 transition-all hover:border-purple-500/50 p-6 flex flex-col justify-center items-center text-center">
                                 <div className="p-3 bg-red-500/10 rounded-full mb-4">
                                     <Youtube className="h-8 w-8 text-red-500" />
                                 </div>
-                                <h3 className="text-lg font-bold text-white mb-2">Self-Study Session</h3>
-                                <p className="text-xs text-gray-500 mb-6 max-w-[200px]">Paste any YouTube link to start an AI-assisted focus session.</p>
+                                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Self-Study Session</h3>
+                                <p className="text-xs text-gray-500 dark:text-gray-400 mb-6 max-w-[200px]">Paste any YouTube link to start an AI-assisted focus session.</p>
                                 <div className="flex w-full gap-2">
                                     <input 
                                         type="text"
                                         placeholder="Paste link..."
-                                        className="flex-1 bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:ring-1 focus:ring-red-500"
+                                        className="flex-1 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg px-3 py-2 text-xs text-gray-900 dark:text-white focus:outline-none focus:ring-1 focus:ring-red-500"
                                         value={selfStudyUrl}
                                         onChange={(e) => setSelfStudyUrl(e.target.value)}
                                     />
                                     <button
                                         onClick={() => {
-                                            const id = getYouTubeId(selfStudyUrl);
+                                             const id = getYouTubeId(selfStudyUrl);
                                             if (id) {
                                                 setActiveVideo({
                                                     id: "temp",
@@ -600,28 +600,28 @@ export default function LearningPage() {
                                 </div>
                             </div>
                                 {resources.map((res) => (
-                                    <div key={res.id} className="group overflow-hidden rounded-xl border border-gray-800 bg-gray-950 transition-all hover:border-purple-500/50">
-                                        <div className="aspect-video bg-gray-800 relative flex items-center justify-center group-hover:bg-gray-800/80">
+                                    <div key={res.id} className="group overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 transition-all hover:border-purple-500/50 shadow-sm">
+                                        <div className="aspect-video bg-gray-100 dark:bg-gray-800 relative flex items-center justify-center group-hover:opacity-90">
                                             {getYouTubeId(res.link) ? (
                                                 <img
                                                     src={`https://img.youtube.com/vi/${getYouTubeId(res.link)}/hqdefault.jpg`}
                                                     alt={res.title}
-                                                    className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity"
+                                                    className="w-full h-full object-cover opacity-80 dark:opacity-60 group-hover:opacity-60 dark:group-hover:opacity-40 transition-opacity"
                                                 />
                                             ) : (
-                                                <div className="w-full h-full bg-gray-900" />
+                                                <div className="w-full h-full bg-gray-100 dark:bg-gray-900" />
                                             )}
                                             <PlayCircle className="absolute h-12 w-12 text-white opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all shadow-xl" />
                                         </div>
                                         <div className="p-4">
                                             <div className="flex justify-between items-start">
-                                                <h3 className="font-semibold text-white line-clamp-2">{res.title}</h3>
-                                                <span className="text-[10px] bg-gray-800 text-gray-400 px-2 py-1 rounded uppercase">{res.type}</span>
+                                                <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-2">{res.title}</h3>
+                                                <span className="text-[10px] bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400 px-2 py-1 rounded uppercase font-medium">{res.type}</span>
                                             </div>
                                             <p className="mt-1 text-xs text-gray-500">Shared by {res.submittedByName}</p>
                                             <button
                                                 onClick={() => setActiveVideo(res)}
-                                                className="mt-3 flex items-center text-xs font-medium text-purple-400 hover:text-purple-300 transition-colors"
+                                                className="mt-3 flex items-center text-xs font-medium text-purple-600 dark:text-purple-400 hover:text-purple-500 dark:hover:text-purple-300 transition-colors"
                                             >
                                                 Start Learning <ExternalLink className="ml-1 h-3 w-3" />
                                             </button>
@@ -634,10 +634,10 @@ export default function LearningPage() {
             </div >
 
             {/* AI Tutor Chat - Desktop Sidebar */}
-            <div className="hidden xl:flex w-96 flex-col rounded-xl border border-gray-800 bg-gray-900">
-                <div className="border-b border-gray-800 p-4">
-                    <h3 className="flex items-center font-semibold text-white">
-                        <Bot className="mr-2 h-5 w-5 text-green-400" />
+            <div className="hidden xl:flex w-96 flex-col rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-sm transition-colors">
+                <div className="border-b border-gray-200 dark:border-gray-800 p-4">
+                    <h3 className="flex items-center font-semibold text-gray-900 dark:text-white">
+                        <Bot className="mr-2 h-5 w-5 text-green-500" />
                         AI Tutor
                     </h3>
                 </div>
@@ -648,22 +648,22 @@ export default function LearningPage() {
             <div className="xl:hidden">
                 <button
                     onClick={() => setIsMobileChatOpen(true)}
-                    className="fixed bottom-6 right-6 w-14 h-14 bg-purple-600 text-white rounded-full shadow-2xl flex items-center justify-center z-40 hover:scale-110 active:scale-95 transition-all animate-bounce"
+                    className="fixed bottom-24 right-6 w-14 h-14 bg-purple-600 text-white rounded-full shadow-2xl flex items-center justify-center z-40 hover:scale-110 active:scale-95 transition-all animate-bounce"
                 >
                     <Bot className="w-7 h-7" />
                 </button>
 
                 {isMobileChatOpen && (
                     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex flex-col animate-in fade-in duration-300">
-                        <div className="flex justify-between items-center p-4 border-b border-gray-800 bg-gray-950">
-                            <h3 className="text-white font-bold flex items-center gap-2">
-                                <Bot className="w-5 h-5 text-green-400" /> AI Tutor Assistant
+                        <div className="flex justify-between items-center p-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950">
+                            <h3 className="text-gray-900 dark:text-white font-bold flex items-center gap-2">
+                                <Bot className="w-5 h-5 text-green-500" /> AI Tutor Assistant
                             </h3>
-                            <button onClick={() => setIsMobileChatOpen(false)} className="bg-gray-800 p-2 rounded-lg text-white">
+                            <button onClick={() => setIsMobileChatOpen(false)} className="bg-gray-100 dark:bg-gray-800 p-2 rounded-lg text-gray-700 dark:text-white">
                                 <X className="w-5 h-5" />
                             </button>
                         </div>
-                        <div className="flex-1 bg-gray-900 overflow-hidden">
+                        <div className="flex-1 bg-white dark:bg-gray-900 overflow-hidden">
                             <ChatInterface messages={messages} isLoading={isLoading} input={input} setInput={setInput} handleSend={handleSend} />
                         </div>
                     </div>
@@ -673,41 +673,41 @@ export default function LearningPage() {
             {/* Submit Modal */}
             {
                 showSubmitModal && (
-                    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-                        <div className="w-full max-w-md rounded-xl border border-gray-700 bg-gray-900 p-6 shadow-2xl">
+                    <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+                        <div className="w-full max-w-md rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-6 shadow-2xl">
                             <div className="flex items-center justify-between mb-4">
-                                <h3 className="text-xl font-bold text-white">Submit Resource</h3>
-                                <button onClick={() => setShowSubmitModal(false)} className="text-gray-400 hover:text-white">
+                                <h3 className="text-xl font-bold text-gray-900 dark:text-white">Submit Resource</h3>
+                                <button onClick={() => setShowSubmitModal(false)} className="text-gray-400 hover:text-gray-700 dark:hover:text-white">
                                     <X className="h-5 w-5" />
                                 </button>
                             </div>
                             <form onSubmit={handleSubmitResource} className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-1">Title</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Title</label>
                                     <input
                                         type="text"
                                         required
-                                        className="w-full rounded-lg bg-gray-800 border border-gray-700 p-2.5 text-white focus:border-purple-500 focus:outline-none"
+                                        className="w-full rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 p-2.5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-purple-500 focus:outline-none text-sm shadow-sm"
                                         placeholder="e.g., React Hooks Tutorial"
                                         value={newResource.title}
                                         onChange={e => setNewResource({ ...newResource, title: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-1">Link URL</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Link URL</label>
                                     <input
                                         type="url"
                                         required
-                                        className="w-full rounded-lg bg-gray-800 border border-gray-700 p-2.5 text-white focus:border-purple-500 focus:outline-none"
+                                        className="w-full rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 p-2.5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-purple-500 focus:outline-none text-sm shadow-sm"
                                         placeholder="https://youtube.com/..."
                                         value={newResource.link}
                                         onChange={e => setNewResource({ ...newResource, link: e.target.value })}
                                     />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-400 mb-1">Type</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">Type</label>
                                     <select
-                                        className="w-full rounded-lg bg-gray-800 border border-gray-700 p-2.5 text-white focus:border-purple-500 focus:outline-none"
+                                        className="w-full rounded-lg bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 p-2.5 text-gray-900 dark:text-white focus:border-purple-500 focus:outline-none text-sm shadow-sm"
                                         value={newResource.type}
                                         onChange={e => setNewResource({ ...newResource, type: e.target.value as "video" })}
                                     >
@@ -719,7 +719,7 @@ export default function LearningPage() {
                                 <button
                                     type="submit"
                                     disabled={isSubmitting}
-                                    className="w-full rounded-lg bg-purple-600 py-3 font-semibold text-white hover:bg-purple-500 disabled:opacity-50"
+                                    className="w-full rounded-lg bg-purple-600 py-3 font-semibold text-white hover:bg-purple-500 disabled:opacity-50 shadow-md shadow-purple-500/20"
                                 >
                                     {isSubmitting ? "Submitting..." : "Submit for Approval"}
                                 </button>
@@ -734,13 +734,13 @@ export default function LearningPage() {
 
 function ChatInterface({ messages, isLoading, input, setInput, handleSend }: any) {
     return (
-        <div className="flex flex-col h-full">
-            <div className="flex-1 space-y-4 overflow-y-auto p-4 scrollbar-thin scrollbar-thumb-gray-800 scrollbar-track-transparent">
+        <div className="flex flex-col h-full bg-white dark:bg-gray-900 transition-colors">
+            <div className="flex-1 space-y-4 overflow-y-auto p-4 scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-800 scrollbar-track-transparent">
                 {messages.map((msg: any, idx: number) => (
                     <div key={idx} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                        <div className={`max-w-[90%] rounded-xl p-4 text-sm overflow-x-auto ${msg.role === "user"
-                            ? "bg-blue-600 text-white"
-                            : "bg-gray-800 text-gray-200"
+                        <div className={`max-w-[90%] rounded-xl p-4 text-sm overflow-x-auto shadow-sm ${msg.role === "user"
+                            ? "bg-purple-600 text-white"
+                            : "bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-200 border border-gray-200/80 dark:border-transparent"
                             }`}>
                             {msg.role === "user" ? (
                                 msg.content
@@ -753,11 +753,11 @@ function ChatInterface({ messages, isLoading, input, setInput, handleSend }: any
                                         ul: ({ node, ...props }) => <ul className="list-disc ml-5 mb-3 space-y-1" {...props} />,
                                         ol: ({ node, ...props }) => <ol className="list-decimal ml-5 mb-3 space-y-1" {...props} />,
                                         li: ({ node, ...props }) => <li className="" {...props} />,
-                                        h1: ({ node, ...props }) => <h1 className="text-xl font-bold mb-2 mt-4 text-white" {...props} />,
-                                        h2: ({ node, ...props }) => <h2 className="text-lg font-bold mb-2 mt-3 text-white" {...props} />,
-                                        h3: ({ node, ...props }) => <h3 className="text-base font-bold mb-2 mt-3 text-white" {...props} />,
-                                        a: ({ node, ...props }) => <a className="text-blue-400 hover:text-blue-300 hover:underline transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
-                                        blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-gray-600 pl-4 py-1 my-3 italic text-gray-400 bg-gray-900/50 rounded-r-lg" {...props} />,
+                                        h1: ({ node, ...props }) => <h1 className="text-xl font-bold mb-2 mt-4 text-gray-900 dark:text-white" {...props} />,
+                                        h2: ({ node, ...props }) => <h2 className="text-lg font-bold mb-2 mt-3 text-gray-900 dark:text-white" {...props} />,
+                                        h3: ({ node, ...props }) => <h3 className="text-base font-bold mb-2 mt-3 text-gray-900 dark:text-white" {...props} />,
+                                        a: ({ node, ...props }) => <a className="text-blue-600 dark:text-blue-400 hover:underline transition-colors" target="_blank" rel="noopener noreferrer" {...props} />,
+                                        blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-purple-500 pl-4 py-1 my-3 italic text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-gray-900/50 rounded-r-lg" {...props} />,
                                     }}
                                 >
                                     {msg.content}
@@ -768,18 +768,18 @@ function ChatInterface({ messages, isLoading, input, setInput, handleSend }: any
                 ))}
                 {isLoading && (
                     <div className="flex justify-start">
-                        <div className="bg-gray-800 text-gray-400 rounded-xl p-3 text-xs animate-pulse font-mono tracking-widest">
+                        <div className="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 rounded-xl p-3 text-xs animate-pulse font-mono tracking-widest border border-gray-200 dark:border-transparent">
                             THINKING...
                         </div>
                     </div>
                 )}
             </div>
 
-            <form onSubmit={handleSend} className="border-t border-gray-800 p-4 bg-gray-950/30">
+            <form onSubmit={handleSend} className="border-t border-gray-200 dark:border-gray-800 p-4 bg-white dark:bg-gray-950/30">
                 <div className="flex space-x-2">
                     <input
                         type="text"
-                        className="flex-1 rounded-lg border border-gray-700 bg-gray-800 p-2.5 text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none text-sm"
+                        className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 p-2.5 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-purple-500 focus:outline-none text-sm shadow-sm"
                         placeholder="Ask your tutor..."
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
@@ -788,7 +788,7 @@ function ChatInterface({ messages, isLoading, input, setInput, handleSend }: any
                     <button
                         type="submit"
                         disabled={isLoading || !input.trim()}
-                        className="rounded-lg bg-purple-600 p-2.5 text-white hover:bg-purple-500 disabled:opacity-50 transition-all hover:scale-105 active:scale-95 shadow-lg shadow-purple-500/20"
+                        className="rounded-lg bg-purple-600 p-2.5 text-white hover:bg-purple-500 disabled:opacity-50 transition-all hover:scale-105 active:scale-95 shadow-md shadow-purple-500/20"
                     >
                         <Send className="h-5 w-5" />
                     </button>

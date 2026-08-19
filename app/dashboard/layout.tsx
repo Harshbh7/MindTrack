@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
     return (
         <ProtectedRoute>
-            <div className="flex h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-white relative transition-colors">
+            <div className="flex h-screen bg-[#faf8f5] dark:bg-[#0c1017] text-stone-900 dark:text-stone-100 relative transition-colors">
                 <StrictProctoring />
                 <MusicPlayer />
 

@@ -153,7 +153,7 @@ export default function DashboardPage() {
             {/* Top Stats Cards */}
             <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 {/* Lifetime Card */}
-                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:border-purple-500/30 transition-colors group">
+                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:border-purple-500/30 transition-colors group shadow-sm">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <Trophy className="h-24 w-24 text-purple-500" />
                     </div>
@@ -164,13 +164,13 @@ export default function DashboardPage() {
                         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Lifetime Focus</h3>
                     </div>
                     <p className="text-3xl font-bold text-gray-900 dark:text-white">{formatTimeDetailed(stats.lifetimeSeconds)}</p>
-                    <p className="text-xs text-purple-400 mt-2 flex items-center">
+                    <p className="text-xs text-purple-600 dark:text-purple-400 mt-2 flex items-center font-medium">
                         Total focus journey
                     </p>
                 </div>
 
                 {/* Today Card */}
-                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:border-green-500/30 transition-colors group">
+                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:border-green-500/30 transition-colors group shadow-sm">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <Zap className="h-24 w-24 text-green-500" />
                     </div>
@@ -181,13 +181,13 @@ export default function DashboardPage() {
                         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Focused Today</h3>
                     </div>
                     <p className="text-3xl font-bold text-gray-900 dark:text-white">{formatTimeDetailed(stats.todaySeconds)}</p>
-                    <p className="text-xs text-green-400 mt-2 flex items-center">
+                    <p className="text-xs text-green-600 dark:text-green-400 mt-2 flex items-center font-medium">
                         <Activity className="h-3 w-3 mr-1" /> Active today
                     </p>
                 </div>
 
                 {/* Monthly Card */}
-                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:border-blue-500/30 transition-colors group">
+                <div className="relative overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900/50 p-6 backdrop-blur-sm hover:border-blue-500/30 transition-colors group shadow-sm">
                     <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <Calendar className="h-24 w-24 text-blue-500" />
                     </div>
@@ -198,7 +198,7 @@ export default function DashboardPage() {
                         <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">This Month</h3>
                     </div>
                     <p className="text-3xl font-bold text-gray-900 dark:text-white">{formatTimeDetailed(stats.monthSeconds)}</p>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-blue-600 dark:text-blue-400 mt-2 font-medium">
                         Monthly Cumulative
                     </p>
                 </div>
@@ -214,25 +214,25 @@ export default function DashboardPage() {
                     <ProductivityHeatmap />
 
                     {/* Activity Chart */}
-                    <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+                    <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm transition-colors">
                         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-6">Recent Activity</h3>
                         <div className="h-[300px] w-full">
                             {chartData.length > 0 ? (
                                 <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
                                     <RechartsBarChart data={chartData}>
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#1f2937" vertical={false} />
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" vertical={false} className="dark:stroke-gray-800" />
                                         <XAxis dataKey="name" stroke="#6b7280" axisLine={false} tickLine={false} />
                                         <YAxis stroke="#6b7280" axisLine={false} tickLine={false} tickFormatter={(val) => `${(val / 60).toFixed(0)}m`} />
                                         <Tooltip
-                                            contentStyle={{ backgroundColor: '#111827', borderColor: '#374151', color: '#fff' }}
-                                            cursor={{ fill: '#1f2937', opacity: 0.4 }}
+                                            contentStyle={{ backgroundColor: 'rgba(17, 24, 39, 0.95)', borderColor: '#374151', color: '#fff', borderRadius: '0.75rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)' }}
+                                            cursor={{ fill: 'rgba(156, 163, 175, 0.15)' }}
                                             formatter={(value: number | undefined) => [value ? `${(value / 60).toFixed(1)} mins` : "0 mins", "Focus Time"]}
                                         />
-                                        <Bar dataKey="seconds" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                                        <Bar dataKey="seconds" fill="#8b5cf6" radius={[6, 6, 0, 0]} />
                                     </RechartsBarChart>
                                 </ResponsiveContainer>
                             ) : (
-                                <div className="h-full flex items-center justify-center text-gray-500">
+                                <div className="h-full flex items-center justify-center text-gray-500 dark:text-gray-400">
                                     No activity recorded yet. Start a session!
                                 </div>
                             )}

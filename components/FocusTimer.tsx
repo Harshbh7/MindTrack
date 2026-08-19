@@ -181,7 +181,7 @@ export default function FocusTimer() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center space-y-4 md:space-y-6 rounded-2xl border border-gray-800 bg-gray-900 p-4 md:p-8 shadow-2xl w-full max-w-md mx-auto">
+        <div className="flex flex-col items-center space-y-4 md:space-y-6 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 md:p-8 shadow-xl w-full max-w-md mx-auto transition-colors">
             {/* Session Report Overlay */}
             {showReport && (
                 <SessionReport
@@ -191,7 +191,7 @@ export default function FocusTimer() {
                 />
             )}
 
-            <div className="relative overflow-hidden rounded-xl border-2 border-gray-700 shadow-lg w-full max-w-[320px] aspect-[4/3] bg-black">
+            <div className="relative overflow-hidden rounded-xl border-2 border-gray-200 dark:border-gray-700 shadow-lg w-full max-w-[320px] aspect-[4/3] bg-black">
                 {/* 1. Native Video Element */}
                 <video
                     ref={videoRef}
@@ -252,20 +252,20 @@ export default function FocusTimer() {
             </div>
 
             <div className="text-center">
-                <h2 className="text-4xl md:text-6xl font-mono font-bold text-white tracking-wider">
+                <h2 className="text-4xl md:text-6xl font-mono font-bold text-gray-900 dark:text-white tracking-wider">
                     {formatTime(seconds)}
                 </h2>
                 <div className="mt-4 flex items-center justify-center gap-2">
                     <label className="flex items-center cursor-pointer gap-2">
                         <div className="relative">
                             <input type="checkbox" className="sr-only" checked={strictMode} onChange={() => setStrictMode(!strictMode)} />
-                            <div className={`block w-10 h-6 rounded-full transition-colors ${strictMode ? 'bg-red-500' : 'bg-gray-600'}`}></div>
+                            <div className={`block w-10 h-6 rounded-full transition-colors ${strictMode ? 'bg-red-500' : 'bg-gray-300 dark:bg-gray-600'}`}></div>
                             <div className={`absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition-transform ${strictMode ? 'translate-x-4' : ''}`}></div>
                         </div>
-                        <span className="text-sm text-gray-300">Strict Mode (Auto-Pause)</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">Strict Mode (Auto-Pause)</span>
                     </label>
                 </div>
-                <p className="mt-2 text-gray-400">Total Focus Time</p>
+                <p className="mt-2 text-gray-500 dark:text-gray-400">Total Focus Time</p>
             </div>
 
             <div className="flex space-x-4">

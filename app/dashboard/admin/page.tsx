@@ -371,8 +371,8 @@ export default function AdminPage() {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between">
-                <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
-                <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-500 text-sm font-bold border border-red-500/20">
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
+                <span className="px-3 py-1 rounded-full bg-red-500/10 text-red-600 dark:text-red-500 text-sm font-bold border border-red-500/20">
                     ADMIN MODE
                 </span>
             </div>
@@ -380,29 +380,29 @@ export default function AdminPage() {
             {/* Stats Overview */}
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
                 <div 
-                    className="rounded-xl border border-gray-800 bg-gray-900 p-6 cursor-pointer hover:bg-gray-800 transition-colors"
+                    className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800 shadow-sm transition-colors"
                     onClick={() => setIsTotalUsersModalOpen(true)}
                 >
-                    <h3 className="text-sm font-medium text-gray-400">Total Users</h3>
-                    <p className="mt-2 text-3xl font-bold text-white">
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total Users</h3>
+                    <p className="mt-2 text-3xl font-bold text-gray-900 dark:text-white">
                         {loadingStats ? "..." : stats.totalUsers}
                     </p>
                 </div>
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-                    <h3 className="text-sm font-medium text-gray-400">Active Sessions</h3>
-                    <p className="mt-2 text-3xl font-bold text-blue-400">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Active Sessions</h3>
+                    <p className="mt-2 text-3xl font-bold text-blue-600 dark:text-blue-400">
                         {loadingStats ? "..." : stats.activeSessions}
                     </p>
                 </div>
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-                    <h3 className="text-sm font-medium text-gray-400">Pending Approvals</h3>
-                    <p className="mt-2 text-3xl font-bold text-yellow-500">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Pending Approvals</h3>
+                    <p className="mt-2 text-3xl font-bold text-yellow-600 dark:text-yellow-500">
                         {loadingStats ? "..." : stats.pendingApprovals}
                     </p>
                 </div>
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-                    <h3 className="text-sm font-medium text-gray-400">Total App Focus</h3>
-                    <p className="mt-2 text-3xl font-bold text-green-400">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+                    <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400">Total App Focus</h3>
+                    <p className="mt-2 text-3xl font-bold text-green-600 dark:text-green-400">
                         {loadingStats ? "..." : formatTimeDetailed(stats.totalFocusTime)}
                     </p>
                 </div>
@@ -410,14 +410,14 @@ export default function AdminPage() {
 
             <div className="grid gap-6 lg:grid-cols-3">
                 {/* Active Users Table */}
-                <div className="lg:col-span-2 rounded-xl border border-gray-800 bg-gray-900 p-6 flex flex-col">
-                    <h2 className="mb-4 text-xl font-bold text-white flex items-center">
-                        <Users className="mr-2 h-5 w-5 text-blue-400" />
+                <div className="lg:col-span-2 rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 flex flex-col shadow-sm">
+                    <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <Users className="mr-2 h-5 w-5 text-blue-500" />
                         Active Users
                     </h2>
-                <div className="overflow-x-auto rounded-lg border border-gray-800">
-                    <table className="w-full text-left text-sm text-gray-400 min-w-[600px]">
-                        <thead className="bg-gray-950 text-gray-200">
+                <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-800">
+                    <table className="w-full text-left text-sm text-gray-600 dark:text-gray-400 min-w-[600px]">
+                        <thead className="bg-gray-50 dark:bg-gray-950 text-gray-700 dark:text-gray-200 border-b border-gray-200 dark:border-gray-800">
                             <tr>
                                 <th className="p-4">Name</th>
                                 <th className="p-4">Email</th>
@@ -426,7 +426,7 @@ export default function AdminPage() {
                                 <th className="p-4 text-right">Action</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-800 bg-gray-900">
+                        <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
                             {activeUsers.length === 0 ? (
                                 <tr>
                                     <td colSpan={5} className="p-8 text-center text-gray-500 italic">
@@ -437,23 +437,23 @@ export default function AdminPage() {
                                 activeUsers.map((u) => {
                                     const userInfo = allUsersData[u.uid] || {};
                                     return (
-                                        <tr key={u.uid} className="hover:bg-gray-800/50">
-                                            <td className="p-4 font-medium text-white">{userInfo.name || u.name || "Unknown"}</td>
-                                            <td className="p-4 text-gray-300">{userInfo.email || u.email || "N/A"}</td>
+                                        <tr key={u.uid} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                            <td className="p-4 font-medium text-gray-900 dark:text-white">{userInfo.name || u.name || "Unknown"}</td>
+                                            <td className="p-4 text-gray-600 dark:text-gray-300">{userInfo.email || u.email || "N/A"}</td>
                                             <td className="p-4">
-                                                <div className="flex items-center text-gray-400">
+                                                <div className="flex items-center text-gray-500 dark:text-gray-400">
                                                     <Clock className="mr-2 h-4 w-4" />
                                                     {formatDuration(u.last_changed)}
                                                 </div>
                                             </td>
                                             <td className="p-4">
-                                                <span className="inline-flex items-center text-green-500 text-xs font-medium uppercase">
+                                                <span className="inline-flex items-center text-green-600 dark:text-green-500 text-xs font-medium uppercase">
                                                     <span className="h-2 w-2 rounded-full bg-green-500 mr-2"></span>
                                                     Online
                                                 </span>
                                             </td>
                                             <td className="p-4 text-right">
-                                                <button onClick={() => handleKickUser(u.uid)} className="text-red-500 hover:text-red-400 bg-red-500/10 hover:bg-red-500/20 px-3 py-1 rounded text-xs transition">
+                                                <button onClick={() => handleKickUser(u.uid)} className="text-red-600 dark:text-red-500 hover:text-red-700 bg-red-50 dark:bg-red-500/10 hover:bg-red-100 dark:hover:bg-red-500/20 px-3 py-1 rounded text-xs transition">
                                                     Kick
                                                 </button>
                                             </td>
@@ -467,21 +467,21 @@ export default function AdminPage() {
             </div>
 
             {/* Top Performers Table */}
-            <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 flex flex-col">
-                <h2 className="mb-4 text-xl font-bold text-white flex items-center">
+            <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 flex flex-col shadow-sm">
+                <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white flex items-center">
                     <Trophy className="mr-2 h-5 w-5 text-yellow-500" />
                     Top Performers
                 </h2>
-                <div className="overflow-hidden rounded-lg border border-gray-800 flex-1">
-                    <table className="w-full text-left text-sm text-gray-400">
-                        <thead className="bg-gray-950 text-gray-200">
+                <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800 flex-1">
+                    <table className="w-full text-left text-sm text-gray-600 dark:text-gray-400">
+                        <thead className="bg-gray-50 dark:bg-gray-950 text-gray-700 dark:text-gray-200 border-b border-gray-200 dark:border-gray-800">
                             <tr>
                                 <th className="p-4">Rank</th>
                                 <th className="p-4">User</th>
                                 <th className="p-4 text-right">Level</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-800 bg-gray-900">
+                        <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
                             {topPerformers.length === 0 ? (
                                 <tr>
                                     <td colSpan={3} className="p-8 text-center text-gray-500 italic">
@@ -493,14 +493,14 @@ export default function AdminPage() {
                                     const userInfo = allUsersData[u.uid] || {};
                                     const calcLevel = 5 + Math.floor(u.xp / 100);
                                     return (
-                                        <tr key={u.uid} className="hover:bg-gray-800/50">
-                                            <td className="p-4 font-bold text-gray-300">#{i + 1}</td>
-                                            <td className="p-4 font-medium text-white truncate max-w-[120px]">
+                                        <tr key={u.uid} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
+                                            <td className="p-4 font-bold text-gray-700 dark:text-gray-300">#{i + 1}</td>
+                                            <td className="p-4 font-medium text-gray-900 dark:text-white truncate max-w-[120px]">
                                                 {userInfo.name || "Unknown"}
                                                 <div className="text-[10px] text-gray-500 font-normal">{formatTimeDetailed(u.seconds)}</div>
                                             </td>
                                             <td className="p-4 text-right">
-                                                <div className="inline-flex items-center justify-center h-6 min-w-[24px] rounded bg-purple-500/10 text-purple-400 font-bold text-xs px-1">
+                                                <div className="inline-flex items-center justify-center h-6 min-w-[24px] rounded bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 font-bold text-xs px-1">
                                                     {calcLevel}
                                                 </div>
                                             </td>
@@ -515,14 +515,14 @@ export default function AdminPage() {
         </div>
 
         {/* Content Moderation */}
-        <div className="rounded-xl border border-gray-800 bg-gray-900 p-6">
-                <h2 className="mb-4 text-xl font-bold text-white flex items-center">
-                    <Video className="mr-2 h-5 w-5 text-purple-400" />
+        <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 shadow-sm">
+                <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white flex items-center">
+                    <Video className="mr-2 h-5 w-5 text-purple-500 dark:text-purple-400" />
                     Content Moderation
                 </h2>
-                <div className="overflow-hidden rounded-lg border border-gray-800">
-                    <table className="w-full text-left text-sm text-gray-400">
-                        <thead className="bg-gray-950 text-gray-200">
+                <div className="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800">
+                    <table className="w-full text-left text-sm text-gray-600 dark:text-gray-400">
+                        <thead className="bg-gray-50 dark:bg-gray-950 text-gray-700 dark:text-gray-200 border-b border-gray-200 dark:border-gray-800">
                             <tr>
                                 <th className="p-4">Suggested By</th>
                                 <th className="p-4">Title / Link</th>
@@ -530,7 +530,7 @@ export default function AdminPage() {
                                 <th className="p-4 text-right">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-800 bg-gray-900">
+                        <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
                             {pendingResources.length === 0 ? (
                                 <tr>
                                     <td colSpan={4} className="p-8 text-center text-gray-500 italic">
@@ -539,30 +539,30 @@ export default function AdminPage() {
                                 </tr>
                             ) : (
                                 pendingResources.map((res) => (
-                                    <tr key={res.id} className="hover:bg-gray-800/50">
+                                    <tr key={res.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50">
                                         <td className="p-4">{res.submittedByName}</td>
                                         <td className="p-4">
-                                            <div className="font-medium text-white">{res.title}</div>
-                                            <a href={res.link} target="_blank" className="text-xs text-blue-400 truncate max-w-[200px] hover:underline">
+                                            <div className="font-medium text-gray-900 dark:text-white">{res.title}</div>
+                                            <a href={res.link} target="_blank" className="text-xs text-blue-600 dark:text-blue-400 truncate max-w-[200px] hover:underline">
                                                 {res.link}
                                             </a>
                                         </td>
                                         <td className="p-4">
-                                            <span className="rounded-full bg-yellow-500/10 px-2 py-1 text-xs font-medium text-yellow-500 uppercase">
+                                            <span className="rounded-full bg-yellow-500/10 px-2 py-1 text-xs font-medium text-yellow-600 dark:text-yellow-500 uppercase">
                                                 {res.status}
                                             </span>
                                         </td>
                                         <td className="p-4 text-right space-x-2">
                                             <button
                                                 onClick={() => handleApprove(res.id)}
-                                                className="rounded-lg bg-green-500/10 p-2 text-green-500 hover:bg-green-500/20"
+                                                className="rounded-lg bg-green-50 dark:bg-green-500/10 p-2 text-green-600 dark:text-green-500 hover:bg-green-100 dark:hover:bg-green-500/20"
                                                 title="Approve"
                                             >
                                                 <CheckCircle className="h-4 w-4" />
                                             </button>
                                             <button
                                                 onClick={() => handleReject(res.id)}
-                                                className="rounded-lg bg-red-500/10 p-2 text-red-500 hover:bg-red-500/20"
+                                                className="rounded-lg bg-red-50 dark:bg-red-500/10 p-2 text-red-600 dark:text-red-500 hover:bg-red-100 dark:hover:bg-red-500/20"
                                                 title="Reject"
                                             >
                                                 <XCircle className="h-4 w-4" />
@@ -579,22 +579,22 @@ export default function AdminPage() {
             {/* Total Users Modal */}
             {isTotalUsersModalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-                    <div className="bg-gray-900 border border-gray-800 rounded-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[80vh]">
-                        <div className="flex items-center justify-between p-6 border-b border-gray-800">
-                            <h2 className="text-xl font-bold text-white flex items-center">
-                                <Users className="mr-2 h-5 w-5 text-blue-400" />
+                    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[80vh] shadow-2xl">
+                        <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center">
+                                <Users className="mr-2 h-5 w-5 text-blue-500" />
                                 All Registered Users
                             </h2>
                             <button 
                                 onClick={() => setIsTotalUsersModalOpen(false)}
-                                className="text-gray-400 hover:text-white"
+                                className="text-gray-400 hover:text-gray-700 dark:hover:text-white"
                             >
                                 <XCircle className="h-6 w-6" />
                             </button>
                         </div>
                         <div className="p-6 overflow-y-auto">
-                            <table className="w-full text-left text-sm text-gray-400">
-                                <thead className="bg-gray-950 text-gray-200">
+                            <table className="w-full text-left text-sm text-gray-600 dark:text-gray-400">
+                                <thead className="bg-gray-50 dark:bg-gray-950 text-gray-700 dark:text-gray-200 border-b border-gray-200 dark:border-gray-800">
                                     <tr>
                                         <th className="p-4">Name</th>
                                         <th className="p-4">Email</th>
@@ -602,7 +602,7 @@ export default function AdminPage() {
                                         <th className="p-4">Status</th>
                                     </tr>
                                 </thead>
-                                <tbody className="divide-y divide-gray-800 bg-gray-900">
+                                <tbody className="divide-y divide-gray-200 dark:divide-gray-800 bg-white dark:bg-gray-900">
                                     {Object.keys(allUsersData).length === 0 ? (
                                         <tr>
                                             <td colSpan={4} className="p-8 text-center text-gray-500 italic">
@@ -611,15 +611,15 @@ export default function AdminPage() {
                                         </tr>
                                     ) : (
                                         Object.entries(allUsersData).map(([uid, userInfo]: [string, any]) => (
-                                            <tr key={uid} className="hover:bg-gray-800/50 cursor-pointer transition-colors" onClick={() => openDetailedUserModal(uid, userInfo)}>
-                                                <td className="p-4 font-medium text-white">{userInfo.name || "Unknown"}</td>
-                                                <td className="p-4 text-gray-300">{userInfo.email || "N/A"}</td>
-                                                <td className="p-4 text-xs font-mono text-gray-500">{uid}</td>
+                                            <tr key={uid} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors" onClick={() => openDetailedUserModal(uid, userInfo)}>
+                                                <td className="p-4 font-medium text-gray-900 dark:text-white">{userInfo.name || "Unknown"}</td>
+                                                <td className="p-4 text-gray-600 dark:text-gray-300">{userInfo.email || "N/A"}</td>
+                                                <td className="p-4 text-xs font-mono text-gray-400 dark:text-gray-500">{uid}</td>
                                                 <td className="p-4">
                                                     {bannedUsers[uid] ? (
-                                                        <span className="px-2 py-1 bg-red-500/10 text-red-500 rounded text-xs font-bold">BANNED</span>
+                                                        <span className="px-2 py-1 bg-red-500/10 text-red-600 dark:text-red-500 rounded text-xs font-bold">BANNED</span>
                                                     ) : (
-                                                        <span className="px-2 py-1 bg-green-500/10 text-green-500 rounded text-xs font-bold">ACTIVE</span>
+                                                        <span className="px-2 py-1 bg-green-500/10 text-green-600 dark:text-green-500 rounded text-xs font-bold">ACTIVE</span>
                                                     )}
                                                 </td>
                                             </tr>
@@ -635,14 +635,14 @@ export default function AdminPage() {
             {/* Detailed User View Modal */}
             {selectedUser && (
                 <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
-                    <div className="bg-gray-900 border border-gray-800 rounded-xl w-full max-w-lg overflow-hidden flex flex-col shadow-2xl">
-                        <div className="flex bg-gray-950 items-center justify-between p-6 border-b border-gray-800">
-                            <h2 className="text-xl font-bold text-white flex items-center">
+                    <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-xl w-full max-w-lg overflow-hidden flex flex-col shadow-2xl">
+                        <div className="flex bg-gray-50 dark:bg-gray-950 items-center justify-between p-6 border-b border-gray-200 dark:border-gray-800">
+                            <h2 className="text-xl font-bold text-gray-900 dark:text-white flex items-center">
                                 Detailed Profile
                             </h2>
                             <button 
                                 onClick={() => setSelectedUser(null)}
-                                className="text-gray-400 hover:text-white"
+                                className="text-gray-400 hover:text-gray-700 dark:hover:text-white"
                             >
                                 <XCircle className="h-6 w-6" />
                             </button>
@@ -653,54 +653,54 @@ export default function AdminPage() {
                                     {selectedUser.name ? selectedUser.name[0].toUpperCase() : "U"}
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                                    <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
                                         {selectedUser.name || "Unknown User"}
                                         {bannedUsers[selectedUser.uid] && <Ban className="h-4 w-4 text-red-500" />}
                                     </h3>
-                                    <p className="text-gray-400 text-sm">{selectedUser.email || "No email"}</p>
-                                    <p className="text-xs font-mono text-gray-600 mt-1">ID: {selectedUser.uid}</p>
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm">{selectedUser.email || "No email"}</p>
+                                    <p className="text-xs font-mono text-gray-400 dark:text-gray-600 mt-1">ID: {selectedUser.uid}</p>
                                 </div>
                             </div>
                             
-                            <div className="grid grid-cols-3 gap-4 border-y border-gray-800 py-4">
+                            <div className="grid grid-cols-3 gap-4 border-y border-gray-200 dark:border-gray-800 py-4">
                                 <div className="text-center">
                                     <p className="text-xs text-gray-500 mb-1">Level</p>
-                                    <p className="text-2xl font-bold text-purple-400">{selectedUser.level}</p>
+                                    <p className="text-2xl font-bold text-purple-600 dark:text-purple-400">{selectedUser.level}</p>
                                 </div>
-                                <div className="text-center border-l border-gray-800">
+                                <div className="text-center border-l border-gray-200 dark:border-gray-800">
                                     <p className="text-xs text-gray-500 mb-1">XP</p>
-                                    <p className="text-2xl font-bold text-yellow-500">{selectedUser.xp}</p>
+                                    <p className="text-2xl font-bold text-yellow-600 dark:text-yellow-500">{selectedUser.xp}</p>
                                 </div>
-                                <div className="text-center border-l border-gray-800">
+                                <div className="text-center border-l border-gray-200 dark:border-gray-800">
                                     <p className="text-xs text-gray-500 mb-1">Total Focus</p>
-                                    <p className="text-lg font-bold text-green-400 leading-8">{formatTimeDetailed(selectedUser.seconds)}</p>
+                                    <p className="text-lg font-bold text-green-600 dark:text-green-400 leading-8">{formatTimeDetailed(selectedUser.seconds)}</p>
                                 </div>
                             </div>
 
                             <div className="space-y-4">
-                                <h4 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Moderation Controls</h4>
+                                <h4 className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Moderation Controls</h4>
                                 
-                                <div className="flex items-center justify-between p-3 rounded-lg border border-gray-800 bg-gray-950">
+                                <div className="flex items-center justify-between p-3 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950">
                                     <div>
-                                        <p className="text-sm font-medium text-white">Administrator Role</p>
+                                        <p className="text-sm font-medium text-gray-900 dark:text-white">Administrator Role</p>
                                         <p className="text-xs text-gray-500">Grant full access to the admin dashboard.</p>
                                     </div>
                                     <button 
                                         onClick={() => handleToggleAdminStatus(selectedUser.uid, selectedUser.role)}
-                                        className={`px-4 py-2 rounded text-xs font-bold transition-colors ${selectedUser.role === 'admin' ? 'bg-red-500/10 text-red-500 hover:bg-red-500/20' : 'bg-blue-500/10 text-blue-500 hover:bg-blue-500/20'}`}
+                                        className={`px-4 py-2 rounded text-xs font-bold transition-colors ${selectedUser.role === 'admin' ? 'bg-red-500/10 text-red-600 dark:text-red-500 hover:bg-red-500/20' : 'bg-blue-500/10 text-blue-600 dark:text-blue-500 hover:bg-blue-500/20'}`}
                                     >
                                         {selectedUser.role === 'admin' ? 'Remove Admin' : 'Make Admin'}
                                     </button>
                                 </div>
 
-                                <div className="flex items-center justify-between p-3 rounded-lg border border-red-900/30 bg-red-500/5">
+                                <div className="flex items-center justify-between p-3 rounded-lg border border-red-200 dark:border-red-900/30 bg-red-50 dark:bg-red-500/5">
                                     <div>
-                                        <p className="text-sm font-medium text-red-400">Account Ban</p>
-                                        <p className="text-xs text-red-500/60">Immediately block access to MindTrack.</p>
+                                        <p className="text-sm font-medium text-red-600 dark:text-red-400">Account Ban</p>
+                                        <p className="text-xs text-red-500/80">Immediately block access to MindTrack.</p>
                                     </div>
                                     <button 
                                         onClick={() => handleToggleBan(selectedUser.uid, !!bannedUsers[selectedUser.uid])}
-                                        className={`px-4 py-2 rounded text-xs font-bold transition-colors flex items-center gap-1 ${bannedUsers[selectedUser.uid] ? 'bg-green-500/10 text-green-500 hover:bg-green-500/20' : 'bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-500/20'}`}
+                                        className={`px-4 py-2 rounded text-xs font-bold transition-colors flex items-center gap-1 ${bannedUsers[selectedUser.uid] ? 'bg-green-500/10 text-green-600 dark:text-green-500 hover:bg-green-500/20' : 'bg-red-500 text-white hover:bg-red-600 shadow-md shadow-red-500/20'}`}
                                     >
                                         <AlertTriangle className="h-3 w-3" />
                                         {bannedUsers[selectedUser.uid] ? 'Unban User' : 'Ban User'}
@@ -715,50 +715,50 @@ export default function AdminPage() {
             {/* Communication & Quests Split */}
             <div className="grid gap-6 lg:grid-cols-2 mt-6">
                 {/* Broadcasts */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 flex flex-col">
-                    <h2 className="mb-4 text-xl font-bold text-white flex items-center">
-                        <Megaphone className="mr-2 h-5 w-5 text-orange-400" />
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 flex flex-col shadow-sm">
+                    <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <Megaphone className="mr-2 h-5 w-5 text-orange-500" />
                         Global Broadcasts
                     </h2>
                     {currentBroadcast ? (
-                        <div className="mb-4 p-4 rounded-lg border border-orange-500/20 bg-orange-500/10">
-                            <p className="text-orange-400 font-medium text-sm mb-1">Active Announcement:</p>
-                            <p className="text-white">{currentBroadcast.message}</p>
-                            <p className="text-xs text-orange-500/60 mt-2">{formatDuration(currentBroadcast.timestamp)}</p>
-                            <button onClick={handleClearBroadcast} className="mt-3 text-xs bg-red-500/20 text-red-500 px-3 py-1 rounded hover:bg-red-500/30 transition">
+                        <div className="mb-4 p-4 rounded-lg border border-orange-500/20 bg-orange-50 dark:bg-orange-500/10">
+                            <p className="text-orange-600 dark:text-orange-400 font-medium text-sm mb-1">Active Announcement:</p>
+                            <p className="text-gray-900 dark:text-white">{currentBroadcast.message}</p>
+                            <p className="text-xs text-orange-600/70 dark:text-orange-500/60 mt-2">{formatDuration(currentBroadcast.timestamp)}</p>
+                            <button onClick={handleClearBroadcast} className="mt-3 text-xs bg-red-500/20 text-red-600 dark:text-red-500 px-3 py-1 rounded hover:bg-red-500/30 transition">
                                 Clear Announcement
                             </button>
                         </div>
                     ) : (
-                        <div className="mb-4 p-4 rounded-lg border border-gray-800 bg-gray-950/50 text-gray-500 text-sm text-center italic">
+                        <div className="mb-4 p-4 rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-950/50 text-gray-500 text-sm text-center italic">
                             No active announcements.
                         </div>
                     )}
                     
-                    <div className="mt-auto pt-4 border-t border-gray-800">
-                        <label className="text-sm text-gray-400 block mb-2">New Announcement</label>
+                    <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-800">
+                        <label className="text-sm text-gray-600 dark:text-gray-400 block mb-2">New Announcement</label>
                         <div className="flex gap-2">
                             <input 
                                 type="text" 
                                 value={broadcastMessage}
                                 onChange={(e) => setBroadcastMessage(e.target.value)}
                                 placeholder="Type a message to all users..."
-                                className="flex-1 bg-gray-950 border border-gray-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500"
+                                className="flex-1 bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-800 rounded-lg px-3 py-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-orange-500 shadow-sm text-sm"
                             />
                             <button 
                                 onClick={handleSendBroadcast}
-                                className="bg-orange-600 hover:bg-orange-700 text-white p-2 rounded-lg flex items-center justify-center transition"
+                                className="bg-orange-600 hover:bg-orange-700 text-white p-2.5 rounded-lg flex items-center justify-center transition shadow-sm"
                             >
-                                <Send className="h-5 w-5" />
+                                <Send className="h-4 w-4" />
                             </button>
                         </div>
                     </div>
                 </div>
 
                 {/* Quests */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-6 flex flex-col">
-                    <h2 className="mb-4 text-xl font-bold text-white flex items-center">
-                        <Target className="mr-2 h-5 w-5 text-green-400" />
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6 flex flex-col shadow-sm">
+                    <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white flex items-center">
+                        <Target className="mr-2 h-5 w-5 text-green-500" />
                         Dynamic Quests
                     </h2>
                     
@@ -767,9 +767,9 @@ export default function AdminPage() {
                             <p className="text-gray-500 text-sm italic py-4 text-center">No global quests active.</p>
                         ) : (
                             globalQuests.map((quest) => (
-                                <div key={quest.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-950 border border-gray-800">
-                                    <span className="text-sm text-gray-200">{quest.text}</span>
-                                    <button onClick={() => handleRemoveQuest(quest.id)} className="text-gray-500 hover:text-red-500 transition-colors">
+                                <div key={quest.id} className="flex items-center justify-between p-3 rounded-lg bg-gray-50 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 shadow-sm">
+                                    <span className="text-sm text-gray-800 dark:text-gray-200">{quest.text}</span>
+                                    <button onClick={() => handleRemoveQuest(quest.id)} className="text-gray-400 hover:text-red-500 transition-colors">
                                         <Trash2 className="h-4 w-4" />
                                     </button>
                                 </div>
@@ -777,21 +777,21 @@ export default function AdminPage() {
                         )}
                     </div>
 
-                    <div className="mt-auto pt-4 border-t border-gray-800">
-                        <label className="text-sm text-gray-400 block mb-2">Add Global Quest</label>
+                    <div className="mt-auto pt-4 border-t border-gray-200 dark:border-gray-800">
+                        <label className="text-sm text-gray-600 dark:text-gray-400 block mb-2">Add Global Quest</label>
                         <div className="flex gap-2">
                             <input 
                                 type="text" 
                                 value={questText}
                                 onChange={(e) => setQuestText(e.target.value)}
                                 placeholder="e.g. Meditate for 10 minutes..."
-                                className="flex-1 bg-gray-950 border border-gray-800 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500"
+                                className="flex-1 bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-800 rounded-lg px-3 py-2 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-green-500 shadow-sm text-sm"
                             />
                             <button 
                                 onClick={handleAddQuest}
-                                className="bg-green-600 hover:bg-green-700 text-white p-2 rounded-lg flex items-center justify-center transition"
+                                className="bg-green-600 hover:bg-green-700 text-white p-2.5 rounded-lg flex items-center justify-center transition shadow-sm"
                             >
-                                <Target className="h-5 w-5" />
+                                <Target className="h-4 w-4" />
                             </button>
                         </div>
                     </div>

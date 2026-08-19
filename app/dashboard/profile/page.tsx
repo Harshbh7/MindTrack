@@ -83,33 +83,33 @@ export default function ProfilePage() {
     return (
         <div className="max-w-2xl mx-auto space-y-8">
             <div className="flex items-center space-x-4">
-                <div className="h-16 w-16 rounded-full bg-purple-600 flex items-center justify-center text-white text-2xl font-bold">
+                <div className="h-16 w-16 rounded-full bg-purple-600 flex items-center justify-center text-white text-2xl font-bold shadow-md shadow-purple-500/20">
                     {name.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                    <h2 className="text-2xl font-bold text-white">{name}</h2>
-                    <p className="text-gray-400">{user?.email}</p>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{name}</h2>
+                    <p className="text-gray-600 dark:text-gray-400">{user?.email}</p>
                 </div>
             </div>
 
-            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-white mb-6 flex items-center">
-                    <UserCircle className="mr-2 h-5 w-5 text-purple-400" />
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl p-6 shadow-sm transition-colors">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-6 flex items-center">
+                    <UserCircle className="mr-2 h-5 w-5 text-purple-500 dark:text-purple-400" />
                     My Profile
                 </h3>
 
                 <form onSubmit={handleSave} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">
                             Display Name
                         </label>
                         <div className="relative">
-                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+                            <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                             <input
                                 type="text"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="w-full bg-gray-950 border border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-white focus:outline-none focus:border-purple-500 transition-colors"
+                                className="w-full bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-gray-900 dark:text-white focus:outline-none focus:border-purple-500 transition-colors shadow-sm"
                                 placeholder="Your Name"
                                 required
                             />
@@ -117,23 +117,23 @@ export default function ProfilePage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-400 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-2">
                             Email Address
                         </label>
                         <div className="relative">
-                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-500" />
+                            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
                             <input
                                 type="email"
                                 value={user?.email || ""}
                                 disabled
-                                className="w-full bg-gray-950 border border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-gray-500 cursor-not-allowed"
+                                className="w-full bg-gray-100 dark:bg-gray-950 border border-gray-200 dark:border-gray-800 rounded-lg py-2.5 pl-10 pr-4 text-gray-500 cursor-not-allowed"
                             />
                         </div>
-                        <p className="mt-1 text-xs text-gray-600">Email cannot be changed securely from here yet.</p>
+                        <p className="mt-1 text-xs text-gray-500 dark:text-gray-600">Email cannot be changed securely from here yet.</p>
                     </div>
 
                     {message && (
-                        <div className={`p-3 rounded-lg text-sm ${message.type === 'success' ? 'bg-green-900/30 text-green-400' : 'bg-red-900/30 text-red-400'}`}>
+                        <div className={`p-3 rounded-lg text-sm ${message.type === 'success' ? 'bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 border border-green-200 dark:border-green-800' : 'bg-red-50 text-red-700 dark:bg-red-900/30 dark:text-red-400 border border-red-200 dark:border-red-800'}`}>
                             {message.text}
                         </div>
                     )}
@@ -141,7 +141,7 @@ export default function ProfilePage() {
                     <button
                         type="submit"
                         disabled={saving}
-                        className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-purple-600 hover:bg-purple-700 text-white font-medium py-2.5 rounded-lg flex items-center justify-center transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-purple-500/20"
                     >
                         {saving ? (
                             "Saving..."

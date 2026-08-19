@@ -229,80 +229,80 @@ export default function RoomLobbyPage() {
             )}
 
             <div className="text-center max-w-2xl mx-auto">
-                <h1 className="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-4">Study Rooms</h1>
-                <p className="text-sm md:text-base text-gray-400">Join a collaborative space to study with friends.</p>
+                <h1 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2 md:mb-4">Study Rooms</h1>
+                <p className="text-sm md:text-base text-gray-600 dark:text-gray-400">Join a collaborative space to study with friends.</p>
             </div>
 
             {/* Actions Grid */}
             <div className="grid gap-3 md:gap-4 lg:grid-cols-2 lg:gap-6 max-w-4xl mx-auto w-full">
                 {/* Create Room */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-4 md:p-6 transition-all hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 md:p-6 transition-all hover:border-blue-500/50 hover:shadow-lg hover:shadow-blue-500/10 shadow-sm">
                     <div className="flex items-center gap-3 mb-2 md:mb-4">
                         <div className="p-2 rounded-lg bg-blue-500/10 text-blue-500">
                             <Plus className="h-5 w-5" />
                         </div>
-                        <h2 className="text-lg md:text-xl font-bold text-white">Create New Room</h2>
+                        <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">Create New Room</h2>
                     </div>
-                    <p className="mb-3 md:mb-6 text-xs md:text-sm text-gray-400">Start a new study session instantly.</p>
+                    <p className="mb-3 md:mb-6 text-xs md:text-sm text-gray-600 dark:text-gray-400">Start a new study session instantly.</p>
                     <button
                         onClick={handleCreateClick}
-                        className="w-full rounded-lg bg-blue-600 px-4 py-2.5 md:py-3 text-sm md:text-base font-semibold text-white transition-all hover:bg-blue-500"
+                        className="w-full rounded-lg bg-blue-600 px-4 py-2.5 md:py-3 text-sm md:text-base font-semibold text-white transition-all hover:bg-blue-500 shadow-md shadow-blue-500/20"
                     >
                         Create Room
                     </button>
                 </div>
 
                 {/* Join Room */}
-                <div className="rounded-xl border border-gray-800 bg-gray-900 p-4 md:p-6 transition-all hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10">
+                <div className="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 md:p-6 transition-all hover:border-purple-500/50 hover:shadow-lg hover:shadow-purple-500/10 shadow-sm">
                     <div className="flex items-center gap-3 mb-2 md:mb-4">
                         <div className="p-2 rounded-lg bg-purple-500/10 text-purple-500">
                             <Users className="h-5 w-5" />
                         </div>
-                        <h2 className="text-lg md:text-xl font-bold text-white">Join Room</h2>
+                        <h2 className="text-lg md:text-xl font-bold text-gray-900 dark:text-white">Join Room</h2>
                     </div>
-                    <p className="mb-3 md:mb-6 text-xs md:text-sm text-gray-400">Enter code to join a session.</p>
+                    <p className="mb-3 md:mb-6 text-xs md:text-sm text-gray-600 dark:text-gray-400">Enter code to join a session.</p>
                     <form onSubmit={handleJoinRoom} className="flex gap-2">
                         <input
                             type="text"
                             placeholder="Enter Code"
-                            className="flex-1 rounded-lg border border-gray-700 bg-gray-800 p-2.5 md:p-3 text-sm md:text-base text-white placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
+                            className="flex-1 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-2.5 md:p-3 text-sm md:text-base text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:border-purple-500 focus:outline-none focus:ring-1 focus:ring-purple-500"
                             value={roomId}
                             onChange={(e) => setRoomId(e.target.value)}
                         />
                         <button
                             type="submit"
-                            className="rounded-lg bg-purple-600 px-4 md:px-6 py-2.5 md:py-3 text-sm md:text-base font-semibold text-white transition-all hover:bg-purple-500"
+                            className="rounded-lg bg-purple-600 px-4 md:px-6 py-2.5 md:py-3 text-sm md:text-base font-semibold text-white transition-all hover:bg-purple-500 shadow-md shadow-purple-500/20"
                         >
                             Join
                         </button>
                     </form>
-                    {joinError && <p className="text-red-400 text-xs mt-2">{joinError}</p>}
+                    {joinError && <p className="text-red-500 text-xs mt-2">{joinError}</p>}
                 </div>
             </div>
 
             {/* Active Rooms List */}
             <div className="max-w-4xl mx-auto w-full">
                 <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-xl font-bold text-white">Active Rooms</h3>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white">Active Rooms</h3>
                 </div>
 
                 {deleteError && (
-                    <div className="mb-4 p-3 rounded-lg bg-red-900/50 border border-red-800 text-red-200 text-sm flex justify-between items-center">
+                    <div className="mb-4 p-3 rounded-lg bg-red-50 dark:bg-red-900/50 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-200 text-sm flex justify-between items-center">
                         <span><strong>Admin Error:</strong> {deleteError}</span>
-                        <button onClick={() => setDeleteError("")} className="text-red-400 hover:text-red-200">✕</button>
+                        <button onClick={() => setDeleteError("")} className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-200">✕</button>
                     </div>
                 )}
 
                 {loading ? (
                     <div className="text-center text-gray-500 py-10">Loading rooms...</div>
                 ) : rooms.length === 0 ? (
-                    <div className="text-center text-gray-500 py-10 bg-gray-900/50 rounded-xl border border-gray-800">
+                    <div className="text-center text-gray-500 py-10 bg-white dark:bg-gray-900/50 rounded-xl border border-gray-200 dark:border-gray-800">
                         No active rooms. Create one to get started!
                     </div>
                 ) : (
                     <div className="grid gap-4 lg:grid-cols-2">
                         {rooms.map((room) => (
-                            <div key={room.id} className="flex items-center justify-between p-4 rounded-xl bg-gray-900 border border-gray-800 hover:border-gray-700 transition-colors">
+                            <div key={room.id} className="flex items-center justify-between p-4 rounded-xl bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-gray-300 dark:hover:border-gray-700 shadow-sm transition-colors">
                                 <div className="flex-1 mr-4">
                                     {editingRoomId === room.id ? (
                                         <div className="flex items-center gap-2">
@@ -311,7 +311,7 @@ export default function RoomLobbyPage() {
                                                 type="text"
                                                 value={editingName}
                                                 onChange={(e) => setEditingName(e.target.value)}
-                                                className="flex-1 rounded border border-gray-700 bg-gray-950 px-2 py-1 text-sm text-white focus:border-blue-500 focus:outline-none"
+                                                className="flex-1 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-950 px-2 py-1 text-sm text-gray-900 dark:text-white focus:border-blue-500 focus:outline-none"
                                             />
                                             <button
                                                 onClick={async () => {
@@ -325,24 +325,24 @@ export default function RoomLobbyPage() {
                                                         }
                                                     }
                                                 }}
-                                                className="px-2 py-1 bg-green-900/50 hover:bg-green-800 text-green-200 rounded text-xs"
+                                                className="px-2 py-1 bg-green-100 dark:bg-green-900/50 hover:bg-green-200 dark:hover:bg-green-800 text-green-800 dark:text-green-200 rounded text-xs"
                                             >Save</button>
                                             <button
                                                 onClick={() => setEditingRoomId(null)}
-                                                className="px-2 py-1 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded text-xs"
+                                                className="px-2 py-1 bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded text-xs"
                                             >Cancel</button>
                                         </div>
                                     ) : (
-                                        <h4 className="font-semibold text-white">{room.name}</h4>
+                                        <h4 className="font-semibold text-gray-900 dark:text-white">{room.name}</h4>
                                     )}
-                                    <p className="text-xs text-gray-500 flex items-center gap-1">
+                                    <p className="text-xs text-gray-500 flex items-center gap-1 mt-0.5">
                                         <Users className="h-3 w-3" /> Private Room
                                     </p>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <button
                                         onClick={() => handleOpenClick(room)}
-                                        className="flex items-center px-4 py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg text-sm font-medium transition-colors"
+                                        className="flex items-center px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-900 dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-white rounded-lg text-sm font-medium transition-colors"
                                     >
                                         Open <ArrowRight className="ml-2 h-4 w-4" />
                                     </button>
@@ -355,7 +355,7 @@ export default function RoomLobbyPage() {
                                                     setEditingRoomId(room.id);
                                                     setEditingName(room.name);
                                                 }}
-                                                className="px-3 py-2 bg-blue-900/50 hover:bg-blue-800/80 text-blue-200 border border-blue-800/50 rounded-lg text-sm font-medium transition-colors"
+                                                className="px-3 py-2 bg-blue-100 dark:bg-blue-900/50 hover:bg-blue-200 dark:hover:bg-blue-800/80 text-blue-800 dark:text-blue-200 border border-blue-300 dark:border-blue-800/50 rounded-lg text-sm font-medium transition-colors"
                                                 title="Rename Room (Admin)"
                                             >
                                                 Rename
@@ -373,7 +373,7 @@ export default function RoomLobbyPage() {
                                                         setDeleteError(err.message || "Unknown error occurred while deleting.");
                                                     }
                                                 }}
-                                                className="px-3 py-2 bg-red-900/50 hover:bg-red-800/80 text-red-200 border border-red-800/50 rounded-lg text-sm font-medium transition-colors"
+                                                className="px-3 py-2 bg-red-100 dark:bg-red-900/50 hover:bg-red-200 dark:hover:bg-red-800/80 text-red-800 dark:text-red-200 border border-red-300 dark:border-red-800/50 rounded-lg text-sm font-medium transition-colors"
                                                 title="Delete Room (Admin)"
                                             >
                                                 Delete
