@@ -131,6 +131,16 @@ MindTrack operates on a **Distributed Twin-Server Model**:
 
 ---
 
+## 🔐 Admin Access Credentials
+
+For testing and demonstration of the **Admin Panel** features:
+
+| Role | Email | Password |
+|---|---|---|
+| **Admin** | `Harshbh20102@gmail.com` | `Harsh123@` |
+
+---
+
 <div align="center">
 
 Built with ❤️ by **Harsh Sharma**
