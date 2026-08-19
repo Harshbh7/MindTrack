@@ -1,20 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, updateProfile } from "firebase/auth";
 import { auth, db } from "@/lib/firebase";
 import { doc, setDoc, getDoc } from "firebase/firestore";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/AuthContext";
 import Link from "next/link";
 import { Mail, Lock, User, Chrome, Feather, ArrowRight } from "lucide-react";
 
 export default function SignupPage() {
+    const { user: authUser, loading: authLoading } = useAuth();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+
+    // Auto-redirect if already logged in
+    useEffect(() => {
+        if (!authLoading && authUser) {
+            router.replace("/dashboard");
+        }
+    }, [authUser, authLoading, router]);
 
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -35,7 +44,7 @@ export default function SignupPage() {
                     createdAt: new Date().toISOString(),
                 });
             }
-            router.push("/dashboard");
+            router.replace("/dashboard");
         } catch (err: any) {
             if (err.code === 'auth/email-already-in-use') {
                 setError("Email is already in use.");
@@ -55,26 +64,42 @@ export default function SignupPage() {
         setError("");
         setLoading(true);
         const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
             if (user) {
-                const userRef = doc(db, "users", user.uid);
-                const snap = await getDoc(userRef);
-                if (!snap.exists()) {
-                    const role = user.email === "harshbh20102@gmail.com" ? "admin" : "student";
-                    await setDoc(userRef, {
-                        uid: user.uid,
-                        name: user.displayName || name || "User",
-                        email: user.email || "",
-                        role: role,
-                        createdAt: new Date().toISOString(),
-                    });
+                try {
+                    const userRef = doc(db, "users", user.uid);
+                    const snap = await getDoc(userRef);
+                    if (!snap.exists()) {
+                        const role = user.email === "harshbh20102@gmail.com" ? "admin" : "student";
+                        await setDoc(userRef, {
+                            uid: user.uid,
+                            name: user.displayName || name || "User",
+                            email: user.email || "",
+                            role: role,
+                            createdAt: new Date().toISOString(),
+                        });
+                    }
+                } catch (firestoreErr) {
+                    console.warn("User profile sync notice:", firestoreErr);
                 }
             }
             router.push("/dashboard");
         } catch (err: any) {
-            setError("Google sign-in failed: " + (err.message || "Unknown error"));
+            console.error("Google Auth Error:", err);
+            if (err.code === 'auth/operation-not-allowed') {
+                setError("Google sign-in is not enabled in Firebase Console. Please enable Google provider under Authentication > Sign-in method.");
+            } else if (err.code === 'auth/unauthorized-domain') {
+                setError("This domain/localhost is not authorized in Firebase Console > Authentication > Settings > Authorized domains.");
+            } else if (err.code === 'auth/popup-closed-by-user') {
+                setError("Sign-in popup was closed before completing.");
+            } else if (err.code === 'auth/popup-blocked') {
+                setError("Sign-in popup was blocked by browser. Please allow popups for this site.");
+            } else {
+                setError(err.message || "Google sign-in failed. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
